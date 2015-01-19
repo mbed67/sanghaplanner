@@ -71,11 +71,7 @@ class UsersController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		    $user = $this->userRepository->findUserWithSanghas($id);
-
-		   // dd($user);
-
-		   // dd($user->sanghas->first()->pivot->role->rolename);
+		$user = $this->userRepository->findUserWithSanghas($id);
 
 		return View::make('users.show', ['user' => $user]);
 	}

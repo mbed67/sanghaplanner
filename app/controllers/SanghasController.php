@@ -68,7 +68,9 @@ class SanghasController extends \BaseController {
 	{
 	    $this->createSanghaForm->validate(Input::all());
 
-	    $sangha = $this->execute(CreateSanghaCommand::class);
+	    $input = array_add(Input::get(), 'userId', Auth::id());
+
+	    $sangha = $this->execute(CreateSanghaCommand::class, $input);
 
 	    Flash::success('De nieuwe sangha is aangemaakt.');
 

@@ -11,6 +11,9 @@
             <div>
                 @include('users.partials.users', ['users' => $sangha->users])
             </div>
+            <div>
+            	@include('sanghas.partials.join-sangha')
+            </div>
         </div>
     </div>
 

@@ -1,5 +1,7 @@
 <?php
 
+use Sanghaplanner\Memberships\JoinSanghaCommand;
+
 class MembershipsController extends \BaseController {
 
 	/**
@@ -31,7 +33,13 @@ class MembershipsController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$input = array_add(Input::get(), 'userId', Auth::id());
+
+		$this->execute(JoinSanghaCommand::class, $input);
+
+	    Flash::success('Je verzoek is verstuurd');
+
+	    return Redirect::to('/sanghas');
 	}
 
 

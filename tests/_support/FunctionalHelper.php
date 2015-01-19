@@ -42,7 +42,7 @@ class FunctionalHelper extends \Codeception\Module
         $I->click('Inloggen');
     }
 
-    public function haveAnAdministrator()
+    public function createAnAdministratorRole()
     {
         TestDummy::create('Sanghaplanner\Roles\Role', [
         'rolename' => 'administrator'

@@ -1,6 +1,7 @@
 <?php namespace Sanghaplanner\Users;
 
 use Sanghaplanner\Repositories\DbRepository;
+use Sanghaplanner\Notifications\Notification;
 
 class DbUserRepository extends DbRepository implements UserRepositoryInterface {
 	/**
@@ -47,5 +48,18 @@ class DbUserRepository extends DbRepository implements UserRepositoryInterface {
 	public function findUserWithSanghas($id)
 	{
 		return User::with('sanghas')->find($id);
+	}
+
+	/**
+	 * Create a notification for a user
+	 *
+	 * @param User $user
+	 * @return Notification $notification
+	 */
+	public function newNotification(User $user)
+	{
+		$notification = new Notification($user);
+
+		return $notification;
 	}
 }

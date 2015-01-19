@@ -118,3 +118,18 @@ Route::post('createrole', [
 		'as' => 'createrole_path',
 		'uses' => 'RolesController@store'
 		]);
+
+
+/**
+ * Memberships
+ */
+Route::post('membership', [
+		'as' => 'memberships_path',
+		'uses' => 'MembershipsController@store'
+		]);
+
+Route::delete('membership/{id}', [
+		'as' => 'membership_path',
+		'uses' => 'MembershipsController@destroy'
+		]);
+

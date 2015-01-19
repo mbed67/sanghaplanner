@@ -1,6 +1,7 @@
 <?php namespace Sanghaplanner\Sanghas;
 
 use Sanghaplanner\Roles\RoleRepositoryInterface;
+use Sanghaplanner\Users\UserRepositoryInterface;
 use Laracasts\Commander\CommandHandler;
 use Laracasts\Commander\Events\DispatchableTrait;
 use \Auth;
@@ -20,15 +21,23 @@ class CreateSanghaCommandHandler implements CommandHandler {
 	protected $sanghaRepository;
 
 	/**
+	 * @var UserRepositoryInterface
+	 */
+	protected $userRepository;
+
+	/**
 	 * @param SanghaRepositoryInterface $sanghaRepository
 	 * @param RoleRepositoryInterface $roleRepository
+	 * @param UserRepositoryInterface $userRepository
 	 */
 	public function __construct(
 		SanghaRepositoryInterface $sanghaRepository,
-		RoleRepositoryInterface $roleRepository
+		RoleRepositoryInterface $roleRepository,
+		UserRepositoryInterface $userRepository
 	) {
 		$this->sanghaRepository = $sanghaRepository;
 		$this->roleRepository = $roleRepository;
+		$this->userRepository = $userRepository;
 	}
 	/**
 	 * Handle the command.
@@ -39,7 +48,7 @@ class CreateSanghaCommandHandler implements CommandHandler {
 	public function handle($command)
 	{
 		$sangha = Sangha::createSangha($command->sanghaname);
-		$user = Auth::user();
+		$user = $this->userRepository->findById($command->userId);
 		$role = $this->roleRepository->getRoleByName('administrator')->id;
 
 		$this->sanghaRepository->save($sangha);

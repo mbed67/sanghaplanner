@@ -128,6 +128,7 @@ return array(
         'Clockwork\Support\Laravel\ClockworkServiceProvider',
 	    'Sanghaplanner\Repositories\BackendServiceProvider',
 	    'Sanghaplanner\Search\SearchServiceProvider',
+		'Sanghaplanner\Providers\EventServiceProvider',
 
 	),
 

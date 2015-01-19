@@ -169,6 +169,16 @@ use UserTrait, RemindableTrait, EventGenerator, PresentableTrait;
 	}
 
 	/**
+	 * A user has many notifications
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function notifications()
+	{
+		return $this->hasMany('Sanghaplanner\Notifications\Notification')->withTimestamps();
+	}
+
+	/**
 	 * Find a user based on input from a search box
 	 *
 	 * @param $query

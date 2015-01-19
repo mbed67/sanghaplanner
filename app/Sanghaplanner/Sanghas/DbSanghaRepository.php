@@ -73,4 +73,16 @@ class DbSanghaRepository extends DbRepository implements SanghaRepositoryInterfa
 	{
 		return Sangha::with('users')->find($id);
 	}
+
+	/**
+	 * Finds all users with a certain role for a certain sangha
+	 *
+	 * @param $sanghaId
+	 * @param $roleId
+	 * @return mixed
+	 */
+	public function findUsersByRoleForSangha($sanghaId, $roleId)
+	{
+		return Sangha::find($sanghaId)->users()->wherePivot('role_id', '=', $roleId);
+	}
 }
