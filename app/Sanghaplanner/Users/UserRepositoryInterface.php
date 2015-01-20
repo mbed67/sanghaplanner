@@ -36,4 +36,12 @@ interface UserRepositoryInterface {
 	 * @return mixed
 	 */
 	public function findUserWithSanghas($id);
+
+	/**
+	 * Create a notification for a user
+	 *
+	 * @param User $user
+	 * @return Notification $notification
+	 */
+	public function newNotification(User $user);
 }

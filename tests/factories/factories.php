@@ -1,18 +1,18 @@
 <?php
 
 $factory('Sanghaplanner\Users\User', [
-    'email' => $faker->email,
-    'password' => $faker->word,
-    'firstname' => $faker->word,
-    'middlename' => $faker->word,
-    'lastname' => $faker->word,
-    'address' => $faker->word,
-    'zipcode' => $faker->word,
-    'place' => $faker->word,
-    'phone' => $faker->word,
-    'gsm' => $faker->word,
-    'created_at' => $faker->dateTime($max = 'now'),
-    'updated_at' => $faker->dateTime($max = 'now')
+	'email' => $faker->email,
+	'password' => $faker->word,
+	'firstname' => $faker->word,
+	'middlename' => $faker->word,
+	'lastname' => $faker->word,
+	'address' => $faker->word,
+	'zipcode' => $faker->word,
+	'place' => $faker->word,
+	'phone' => $faker->word,
+	'gsm' => $faker->word,
+	'created_at' => $faker->dateTime($max = 'now'),
+	'updated_at' => $faker->dateTime($max = 'now')
 ]);
 
 // $factory('Sanghaplanner\Pivot\SanghaUser', [
@@ -24,15 +24,15 @@ $factory('Sanghaplanner\Users\User', [
 // ]);
 
 $factory('Sanghaplanner\Sanghas\Sangha', [
-    'sanghaname' => 'Mijn sangha',
-    'created_at' => $faker->dateTime($max = 'now'),
-    'updated_at' => $faker->dateTime($max = 'now')
+	'sanghaname' => 'Mijn sangha',
+	'created_at' => $faker->dateTime($max = 'now'),
+	'updated_at' => $faker->dateTime($max = 'now')
 ]);
 
 $factory('Sanghaplanner\Roles\Role', [
-    'rolename' => $faker->word,
-    'created_at' => $faker->dateTime($max = 'now'),
-    'updated_at' => $faker->dateTime($max = 'now')
+	'rolename' => $faker->word,
+	'created_at' => $faker->dateTime($max = 'now'),
+	'updated_at' => $faker->dateTime($max = 'now')
 ]);
 
 $factory('Sanghaplanner\Notifications\Notification', [

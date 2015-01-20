@@ -74,12 +74,12 @@ class RemindersController extends BaseController {
 			case Password::INVALID_USER:
 				Flash::error(Lang::get($response));
 
-				return Redirect::back();
+			return Redirect::back();
 
 			case Password::PASSWORD_RESET:
 				Flash::success('Je wachtwoord is vernieuwd. Je kunt nu inloggen.');
 
-				return Redirect::to('/');
+			return Redirect::to('/');
 		}
 	}
 }

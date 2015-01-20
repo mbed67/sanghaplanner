@@ -19,7 +19,8 @@ class CreateRolesTable extends Migration {
 			$table->timestamps();
 		});
 	}
-    	/**
+
+	/**
 	 * Reverse the migrations.
 	 *
 	 * @return void
@@ -28,5 +29,4 @@ class CreateRolesTable extends Migration {
 	{
 		Schema::drop('roles');
 	}
-	
 }

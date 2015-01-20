@@ -54,4 +54,13 @@ interface SanghaRepositoryInterface {
 	 * @return mixed
 	 */
 	public function findSanghaWithUsers($id);
+
+	/**
+	 * Finds all users with a certain role for a certain sangha
+	 *
+	 * @param $sanghaId
+	 * @param $roleId
+	 * @return mixed
+	 */
+	public function findUsersByRoleForSangha($sanghaId, $roleId);
 }

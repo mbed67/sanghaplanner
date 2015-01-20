@@ -1,4 +1,4 @@
-<?php 
+<?php
 $I = new FunctionalTester($scenario);
 
 $I->am('a Sanghaplanner member');
@@ -10,4 +10,3 @@ $I->haveAnAccount(['firstname' => 'Bar']);
 $I->amOnPage('/users');
 $I->see('Foo');
 $I->see('Bar');
-

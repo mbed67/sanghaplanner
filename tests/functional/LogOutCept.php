@@ -1,4 +1,4 @@
-<?php 
+<?php
 $I = new FunctionalTester($scenario);
 
 $I->am('Sanghaplanner member');

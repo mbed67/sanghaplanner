@@ -29,5 +29,4 @@ class CreatePasswordRemindersTable extends Migration {
 	{
 		Schema::drop('password_reminders');
 	}
-
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 $I = new FunctionalTester($scenario);
 $I->am('a guest');
 $I->wantTo('sign up for a Sanghaplanner account');
@@ -21,7 +21,7 @@ $I->seeCurrentUrlEquals('');
 $I->see('Welkom bij de Sanghaplanner');
 
 $I->seeRecord('users', [
-    'email' => 'john@example.com'
+	'email' => 'john@example.com'
 ]);
 
 $I->assertTrue(Auth::check());

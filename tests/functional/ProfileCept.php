@@ -9,4 +9,3 @@ $I->signIn();
 $I->click('Profiel');
 
 $I->see('foo de bar');
-

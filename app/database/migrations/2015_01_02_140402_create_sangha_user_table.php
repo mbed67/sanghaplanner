@@ -24,7 +24,7 @@ class CreateSanghaUserTable extends Migration {
 			$table->timestamps();
 		});
 	}
-	
+
 	 /**
 	 * Reverse the migrations.
 	 *
@@ -35,5 +35,4 @@ class CreateSanghaUserTable extends Migration {
 	{
 		Schema::drop('sangha_user');
 	}
-
 }

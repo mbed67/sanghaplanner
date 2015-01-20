@@ -35,5 +35,4 @@ class CreateNotificationsTable extends Migration {
 	{
 		Schema::drop('notifications');
 	}
-
 }
