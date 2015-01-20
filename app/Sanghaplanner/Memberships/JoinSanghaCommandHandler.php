@@ -52,7 +52,7 @@ class JoinSanghaCommandHandler implements CommandHandler {
 		$sangha = $this->sanghaRepository->findById($command->sanghaIdToJoin);
 		$user = $this->userRepository->findById($command->userId);
 		$role = $this->roleRepository->getRoleByName('administrator');
-		$admins = $this->sanghaRepository->findUsersByRoleForSangha($sangha->id, $role->id)->get();
+		$admins = $this->sanghaRepository->findUsersByRoleForSangha($sangha->id, $role->id);
 
 		foreach ($admins as $admin)
 		{

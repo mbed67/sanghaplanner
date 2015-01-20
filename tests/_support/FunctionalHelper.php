@@ -44,21 +44,31 @@ class FunctionalHelper extends \Codeception\Module
 	public function createAnAdministratorRole()
 	{
 		TestDummy::create('Sanghaplanner\Roles\Role', [
-		'rolename' => 'administrator'
+			'rolename' => 'administrator'
 		]);
 	}
 
-	public function haveAMember()
+	public function createAMemberRole()
 	{
 		TestDummy::create('Sanghaplanner\Roles\Role', [
-		'rolename' => 'lid'
+			'rolename' => 'lid'
 		]);
 	}
 
-//     public function haveASangha()
-//     {
-//         TestDummy::create('Sanghaplanner\Pivot\SanghaUser');
-//     }
+	public function haveASanghaWithAnAdministrator()
+	{
+		$role = TestDummy::create('Sanghaplanner\Roles\Role', [
+			'rolename' => 'administrator'
+		]);
+
+		$sangha = TestDummy::create('Sanghaplanner\Sanghas\Sangha', [
+			'sanghaname' => 'Mijn sangha'
+		]);
+
+		$user = TestDummy::create('Sanghaplanner\Users\User');
+
+		$user->sanghas()->attach($sangha->id, array('role_id' => $role->id));
+	}
 
 	public function haveAnAccount($overrides = [])
 	{
