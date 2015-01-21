@@ -7,7 +7,7 @@ class BaseController extends Controller {
 
 	public function __construct()
 	{
-		$this->beforeFilter('auth', ['except' => 'login']);
+		$this->beforeFilter('auth');
 
 
 		$this->beforeFilter(function()

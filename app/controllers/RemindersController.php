@@ -3,6 +3,15 @@
 class RemindersController extends BaseController {
 
 	/**
+	 * Constructor
+	 *
+	 */
+	public function __construct()
+	{
+		$this->beforeFilter('guest');
+	}
+
+	/**
 	 * Display the password reminder view.
 	 *
 	 * @return Response
@@ -67,19 +76,19 @@ class RemindersController extends BaseController {
 			$user->save();
 		});
 
-			switch ($response)
+		switch ($response)
 		{
 			case Password::INVALID_PASSWORD:
 			case Password::INVALID_TOKEN:
 			case Password::INVALID_USER:
 				Flash::error(Lang::get($response));
 
-			return Redirect::back();
+				return Redirect::back();
 
 			case Password::PASSWORD_RESET:
 				Flash::success('Je wachtwoord is vernieuwd. Je kunt nu inloggen.');
 
-			return Redirect::to('/');
+				return Redirect::to('/');
 		}
 	}
 }
