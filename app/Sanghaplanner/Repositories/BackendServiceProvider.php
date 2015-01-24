@@ -23,5 +23,9 @@ class BackendServiceProvider extends ServiceProvider {
 			'Sanghaplanner\Roles\RoleRepositoryInterface',
 			'Sanghaplanner\Roles\DbRoleRepository'
 		);
+		$this->app->bind(
+			'Sanghaplanner\Notifications\NotificationRepositoryInterface',
+			'Sanghaplanner\Notifications\DbNotificationRepository'
+		);
 	}
 }

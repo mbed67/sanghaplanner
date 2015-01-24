@@ -175,7 +175,7 @@ use UserTrait, RemindableTrait, EventGenerator, PresentableTrait;
 	 */
 	public function notifications()
 	{
-		return $this->hasMany('Sanghaplanner\Notifications\Notification')->withTimestamps();
+		return $this->hasMany('Sanghaplanner\Notifications\Notification');
 	}
 
 	/**
@@ -202,8 +202,11 @@ use UserTrait, RemindableTrait, EventGenerator, PresentableTrait;
 	 */
 	public function roleForSangha($id)
 	{
-		$role = $this->sanghas->find($id)->pivot->role->rolename;
+		if ($this->sanghas->find($id))
+		{
+			$role = $this->sanghas->find($id)->pivot->role->rolename;
 
-		return $role;
+			return $role;
+		}
 	}
 }

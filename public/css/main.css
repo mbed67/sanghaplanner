@@ -26,6 +26,31 @@
   left: -10px;
   border: 1px solid #eeeeee; }
 
+.nav-notification {
+  border-bottom: 1px solid #9e9999;
+  width: 300px;
+  padding: 0px 10px; }
+
+.notification {
+  background-color: #fff;
+  margin-bottom: 3em;
+  padding-left: 1em; }
+
+.timestamp {
+  color: #999; }
+
+.notification-body {
+  font-weight: bold; }
+
+.notification-footer {
+  font-weight: bold;
+  font-size: 14pt;
+  text-align: center;
+  padding-top: 10px; }
+
+.membership-request {
+  padding-top: 30px; }
+
 .users {
   margin-bottom: 3em; }
 

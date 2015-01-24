@@ -50,7 +50,12 @@ class DbSanghaRepository extends DbRepository implements SanghaRepositoryInterfa
 	 */
 	public function createSanghaUser(Sangha $sangha, User $user, $role_id)
 	{
-		return $sangha->users()->attach($user->id, array('role_id' => $role_id));
+		if (! $sangha->users()->find($user->id))
+		{
+			$sangha->users()->attach($user->id, array('role_id' => $role_id));
+
+			return true;
+		}
 	}
 
 	/**

@@ -3,11 +3,13 @@
 use Sanghaplanner\Sanghas\SanghaRepositoryInterface;
 use Sanghaplanner\Users\UserRepositoryInterface;
 use Sanghaplanner\Roles\RoleRepositoryInterface;
-use Sanghaplanner\Memberships\Events\MembershipRequested;
+use Sanghaplanner\Memberships\Events\MemberApproved;
+use Sanghaplanner\Memberships\Events\MemberAlreadyExists;
 use Laracasts\Commander\CommandHandler;
 use Laracasts\Commander\Events\DispatchableTrait;
+use Laracasts\Flash\Flash;
 
-class JoinSanghaCommandHandler implements CommandHandler {
+class ApproveMemberCommandHandler implements CommandHandler {
 
 	use DispatchableTrait;
 
@@ -44,40 +46,29 @@ class JoinSanghaCommandHandler implements CommandHandler {
 	/**
 	 * Handle the command.
 	 *
-	 * @todo decouple the handle method from the Notification model
-	 *
 	 * @param object $command
 	 * @return void
 	 */
 	public function handle($command)
 	{
-		$sangha = $this->sanghaRepository->findById($command->sanghaIdToJoin);
+		$sangha = $this->sanghaRepository->findById($command->sanghaId);
 		$user = $this->userRepository->findById($command->userId);
-		$role = $this->roleRepository->getRoleByName('administrator');
-		$admins = $this->sanghaRepository->findUsersByRoleForSangha($sangha->id, $role->id);
+		$role = $this->roleRepository->getRoleByName('lid');
 
-		foreach ($admins as $admin)
+		if ($this->sanghaRepository->createSanghaUser($sangha, $user, $role->id))
 		{
-			$this->userRepository->newNotification($admin)
-				->from($user)
-				->withType('MembershipRequest')
-				->withSubject('Iemand wil lid worden van de sangha')
-				->withBody(
-					$user->firstname
-					. ' '
-					. $user->middlename
-					. ' '
-					. $user->lastname
-					. ' wil lid worden van sangha '
-					. $sangha->sanghaname
-				)
-				->regarding($sangha)
-				->deliver();
+			Flash::success('Deze persoon is nu lid van sangha ' . $sangha->sanghaname);
+
+			$sangha->raise(new MemberApproved($user, $sangha));
+
+		} else
+		{
+			Flash::error('Deze persoon is reeds lid van sangha ' . $sangha->sanghaname);
+
+			$sangha->raise(new MemberAlreadyExists($user, $sangha));
+
 		}
 
-		$sangha->raise(new MembershipRequested($sangha, $user));
-
 		$this->dispatchEventsFor($sangha);
-
 	}
 }

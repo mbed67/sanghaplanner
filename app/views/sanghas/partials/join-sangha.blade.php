@@ -5,7 +5,7 @@
             <button type="submit" class="btn btn-danger">Verlaat sangha {{ $sangha->sanghaname }}</button>
         {{ Form::close() }}
         @else
-        {{ Form::open(['route' => 'memberships_path']) }}
+        {{ Form::open(['route' => 'notifications_path']) }}
             {{ Form::hidden('sanghaIdToJoin', $sangha->id) }}
             <button type="submit" class="btn btn-primary">Vraag lidmaatschap aan voor sangha {{ $sangha->sanghaname }}</button>
         {{ Form::close() }}

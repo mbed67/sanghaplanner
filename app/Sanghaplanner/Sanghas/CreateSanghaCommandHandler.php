@@ -4,7 +4,6 @@ use Sanghaplanner\Roles\RoleRepositoryInterface;
 use Sanghaplanner\Users\UserRepositoryInterface;
 use Laracasts\Commander\CommandHandler;
 use Laracasts\Commander\Events\DispatchableTrait;
-use \Auth;
 
 class CreateSanghaCommandHandler implements CommandHandler {
 

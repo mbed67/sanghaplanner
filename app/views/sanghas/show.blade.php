@@ -15,6 +15,13 @@
             	@include('sanghas.partials.join-sangha')
             </div>
         </div>
+     	<div class="col-md-6">
+            @if($currentUser->roleForSangha($sangha->id) == 'administrator')
+	            <div class="membership-request">
+	            	@include('notifications.partials.membershipRequests', ['notifications' => $notifications])
+	            </div>
+            @endif
+    	</div>
     </div>
 
 @stop

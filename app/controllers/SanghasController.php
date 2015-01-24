@@ -2,6 +2,7 @@
 
 use Sanghaplanner\Forms\CreateSanghaForm;
 use Sanghaplanner\Sanghas\SanghaRepositoryInterface;
+use Sanghaplanner\Notifications\NotificationRepositoryInterface;
 use Sanghaplanner\Sanghas\CreateSanghaCommand;
 
 class SanghasController extends \BaseController {
@@ -17,14 +18,23 @@ class SanghasController extends \BaseController {
 	private $sanghaRepository;
 
 	/**
-	 * @param SanghaRepository $sanghaRepository
+	 * @var NotificationRepositoryInterface
+	 */
+	private $notificationRepository;
+
+	/**
+	 * @param CreateSanghaForm $createSanghaForm
+	 * @param SanghaRepositoryInterface $sanghaRepository
+	 * @param NotificationRepositoryInterface $notificationRepository
 	 */
 	public function __construct(
 		CreateSanghaForm $createSanghaForm,
-		SanghaRepositoryInterface $sanghaRepository
+		SanghaRepositoryInterface $sanghaRepository,
+		NotificationRepositoryInterface $notificationRepository
 	) {
 		$this->createSanghaForm = $createSanghaForm;
 		$this->sanghaRepository = $sanghaRepository;
+		$this->notificationRepository = $notificationRepository;
 
 		parent::__construct();
 	}
@@ -86,8 +96,9 @@ class SanghasController extends \BaseController {
 	public function show($id)
 	{
 		$sangha = $this->sanghaRepository->findSanghaWithUsers($id);
+		$notifications = $this->notificationRepository->showMembershipRequestsForSangha($sangha, Auth::id());
 
-		return View::make('sanghas.show')->withSangha($sangha);
+		return View::make('sanghas.show', ['sangha' => $sangha, 'notifications' => $notifications]);
 	}
 
 

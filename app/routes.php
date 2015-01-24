@@ -133,3 +133,15 @@ Route::delete('membership/{id}', [
 		'uses' => 'MembershipsController@destroy'
 		]);
 
+/**
+ * Notifications
+ */
+Route::get('notifications', [
+		'as' => 'notifications_path',
+		'uses' => 'NotificationsController@index'
+		]);
+
+Route::post('notifications', [
+		'as' => 'notifications_path',
+		'uses' => 'NotificationsController@store'
+		]);

@@ -1,6 +1,7 @@
 <?php
 
-use Sanghaplanner\Memberships\JoinSanghaCommand;
+use Sanghaplanner\Memberships\ApproveMemberCommand;
+use Sanghaplanner\Memberships\RejectMemberCommand;
 
 class MembershipsController extends \BaseController {
 
@@ -35,11 +36,18 @@ class MembershipsController extends \BaseController {
 	{
 		$input = array_add(Input::get(), 'userId', Auth::id());
 
-		$this->execute(JoinSanghaCommand::class, $input);
+		if (Input::exists('approve_button'))
+		{
+			$this->execute(ApproveMemberCommand::class, $input);
 
-	    Flash::success('Je verzoek is verstuurd');
+		    return Redirect::to('/sanghas');
 
-	    return Redirect::to('/sanghas');
+		} else
+		{
+			$this->execute(RejectMemberCommand::class, $input);
+
+			return Redirect::to('/sanghas');
+		}
 	}
 
 

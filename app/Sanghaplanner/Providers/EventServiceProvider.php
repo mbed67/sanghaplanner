@@ -10,6 +10,6 @@ class EventServiceProvider extends ServiceProvider {
 	public function register()
 	{
 		$this->app['events']->listen('Sanghaplanner.*', 'Sanghaplanner\Handlers\EmailNotifier');
-
+		$this->app['events']->listen('Sanghaplanner.*', 'Sanghaplanner\Handlers\MarkNotificationsRead');
 	}
 }

@@ -25,6 +25,12 @@
             <ul class="nav navbar-nav navbar-right">
             @if ($currentUser)
             <li class="dropdown">
+            	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            		Meldingen <span class="badge">{{ $currentUser->notifications()->unread()->count() }}</span>
+            	</a>
+            	@include('notifications.partials.notifications', ['notifications' => $currentUser->notifications()->unread()->orderBy('sent_at', 'desc')->get()])
+            </li>
+            <li class="dropdown">
 
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                     <img class="nav-gravatar" src="{{ $currentUser->present()->gravatar() }}" alt="{{ $currentUser->email }}">
@@ -36,7 +42,7 @@
                       <li class="divider"></li>
                       <li>{{ link_to_route('logout_path', 'Uitloggen') }}</li>
                   </ul>
-                 </li>
+            </li>
             @else
                 <li>{{ link_to_route('register_path', 'Aanmelden') }}</li>
                 <li>{{ link_to_route('login_path', 'Login') }}</li>

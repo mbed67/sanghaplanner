@@ -44,4 +44,12 @@ interface UserRepositoryInterface {
 	 * @return Notification $notification
 	 */
 	public function newNotification(User $user);
+
+	/**
+	 * Find a user with all of its unread notifications
+	 *
+	 * @param $id
+	 * @return mixed
+	 */
+	public function findUserWithAllNotifications($id);
 }

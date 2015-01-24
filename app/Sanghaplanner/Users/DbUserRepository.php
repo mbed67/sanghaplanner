@@ -51,15 +51,29 @@ class DbUserRepository extends DbRepository implements UserRepositoryInterface {
 	}
 
 	/**
-	 * Create a notification for a user
-	 *
 	 * @param User $user
 	 * @return Notification $notification
 	 */
 	public function newNotification(User $user)
 	{
-		$notification = new Notification($user);
+		$notification = new Notification;
+		$notification->user()->associate($user);
 
 		return $notification;
+	}
+
+	/**
+	 * Find a user with all of its unread notifications
+	 *
+	 * @param $id
+	 * @return mixed
+	 */
+	public function findUserWithAllNotifications($id)
+	{
+		return User::with(array('notifications' => function($query)
+		{
+			$query->orderBy('sent_at', 'desc');
+
+		}))->find($id);
 	}
 }
