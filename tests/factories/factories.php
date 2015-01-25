@@ -15,14 +15,6 @@ $factory('Sanghaplanner\Users\User', [
 	'updated_at' => $faker->dateTime($max = 'now')
 ]);
 
-// $factory('Sanghaplanner\Pivot\SanghaUser', [
-//     'sangha_id' => 'factory:Sanghaplanner\Sanghas\Sangha',
-//     'user_id' => 'factory:Sanghaplanner\Users\User',
-//     'role_id' => 'factory:Sanghaplanner\Roles\Role',
-//     'created_at' => $faker->dateTime($max = 'now'),
-//     'updated_at' => $faker->dateTime($max = 'now')
-// ]);
-
 $factory('Sanghaplanner\Sanghas\Sangha', [
 	'sanghaname' => 'Mijn sangha',
 	'created_at' => $faker->dateTime($max = 'now'),
@@ -37,10 +29,13 @@ $factory('Sanghaplanner\Roles\Role', [
 
 $factory('Sanghaplanner\Notifications\Notification', [
 	'user_id' => 'factory:Sanghaplanner\Users\User',
+	'sender_id' => 'factory:Sanghaplanner\Users\User',
+	'type' => 'MembershipRequest',
 	'subject' => $faker->word,
-	'body'	=> $faker->text,
-	'is_read' => false,
-	'sent_at' => $faker->dateTime($max = 'now'),
+	'body'	=> 'Mijn sangha',
+	'object_id' => 'factory:Sanghaplanner\Sanghas\Sangha',
+	'object_type' => 'Sanghaplanner\Sanghas\Sangha',
+	'is_read' => 0,
 	'created_at' => $faker->dateTime($max = 'now'),
 	'updated_at' => $faker->dateTime($max = 'now')
 	]);

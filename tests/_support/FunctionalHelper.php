@@ -65,9 +65,14 @@ class FunctionalHelper extends \Codeception\Module
 			'sanghaname' => 'Mijn sangha'
 		]);
 
-		$user = TestDummy::create('Sanghaplanner\Users\User');
+		$user = TestDummy::create('Sanghaplanner\Users\User', [
+			'email' => 'admin@example.com',
+			'password' => 'admin'
+		]);
 
 		$user->sanghas()->attach($sangha->id, array('role_id' => $role->id));
+
+		return $user;
 	}
 
 	public function haveAnAccount($overrides = [])
@@ -78,5 +83,23 @@ class FunctionalHelper extends \Codeception\Module
 	public function have($model, $overrides = [])
 	{
 		return TestDummy::create($model, $overrides);
+	}
+
+	public function signInAsAdministrator()
+	{
+		$user = $this->haveASanghaWithAnAdministrator();
+		$I = $this->getModule('Laravel4');
+
+		$I->amOnPage('/login');
+		$I->fillField('email', 'admin@example.com');
+		$I->fillField('password', 'admin');
+		$I->click('Inloggen');
+
+		return $user;
+	}
+
+	public function haveANotification($user, $overrides = [])
+	{
+		return $this->have('Sanghaplanner\Notifications\Notification', $overrides);
 	}
 }
