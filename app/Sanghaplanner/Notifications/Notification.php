@@ -13,7 +13,17 @@ class Notification extends Eloquent {
 	 * Which fields may be mass assigned
 	 * @var array
 	 */
-	protected $fillable = ['user_id', 'sender_id', 'subject', 'body', 'is_read', 'sent_at'];
+	protected $fillable = [
+		'user_id',
+		'sender_id',
+		'type',
+		'subject',
+		'body',
+		'object_id',
+		'object_type',
+		'is_read',
+		'sent_at'
+	];
 
 	/**
 	 * The database table used by the model.

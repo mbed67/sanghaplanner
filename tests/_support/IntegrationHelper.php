@@ -68,4 +68,9 @@ class IntegrationHelper extends \Codeception\Module
 
 		return $sangha;
 	}
+
+	public function have($model, $overrides = [])
+	{
+		return TestDummy::create($model, $overrides);
+	}
 }

@@ -63,4 +63,20 @@ class UserRepositoryTest extends \Codeception\TestCase\Test
 
 		$this->assertCount(2, $sanghas);
 	}
+
+	/** @tests */
+	public function it_finds_a_user_with_all_notifications()
+	{
+		$user = $this->tester->createAUser();
+
+		TestDummy::times(4)->create('Sanghaplanner\Notifications\Notification', [
+			'user_id' => $user->id
+		]);
+
+		$result = $this->repo->findUserWithAllNotifications($user->id);
+
+		$notifications = $result->notifications;
+
+		$this->assertCount(4, $notifications);
+	}
 }
