@@ -8,4 +8,5 @@ $I->signIn();
 
 $I->click('Uitloggen');
 
-$I->see('Je bent nu uitgelogd.');
+$I->dontSee('foo@example.com');
+$I->amOnPage('/');
