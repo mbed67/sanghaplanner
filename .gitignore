@@ -12,4 +12,4 @@ codeception.yml
 .project
 .buildpath
 /.settings
-
+/node_modules/

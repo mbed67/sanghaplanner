@@ -5,16 +5,15 @@
 .navbar-default {
   background-color: #00BAE9;
   border-color: #f3f3f3; }
+  .navbar-default .navbar-nav > li > a {
+    color: #fff; }
+    .navbar-default .navbar-nav > li > a:hover {
+      color: #2C6C91; }
 
 .navbar-brand {
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 0.1em; }
-
-.navbar-nav > li > a {
-  color: #fff; }
-  .navbar-nav > li > a:hover {
-    color: #2C6C91; }
 
 .navbar-default .navbar-nav > .active > a {
   background-color: #0091b6; }
@@ -65,5 +64,5 @@ body {
 .page-header {
   text-align: center;
   margin-bottom: 1em;
-  padding-bottom: 0.5em;
+  padding-bottom: .5em;
   border-bottom: 1px solid #ddd; }

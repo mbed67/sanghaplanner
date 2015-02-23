@@ -1,7 +1,4 @@
 var elixir = require('laravel-elixir');
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var autoprefixer = require('gulp-autoprefixer');
 
 /*
  |--------------------------------------------------------------------------
@@ -15,19 +12,7 @@ var autoprefixer = require('gulp-autoprefixer');
  */
 
 elixir(function(mix) {
-    mix.less('app.less');
+    mix.sass('main.scss');
 });
 
 
-gulp.task('css', function() {
-	gulp.src('resources/assets/sass/main.scss')
-		.pipe(sass())
-		.pipe(autoprefixer('last 10 version'))
-		.pipe(gulp.dest('public/css'));
-});
-
-gulp.task('watch', function() {
-	gulp.watch('resources/assets/sass/**/*.scss', ['css']);
-});
-
-gulp.task('default', ['watch']);
