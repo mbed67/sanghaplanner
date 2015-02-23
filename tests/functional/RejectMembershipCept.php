@@ -8,8 +8,8 @@ $I->have('Sanghaplanner\Roles\Role', ['rolename' => 'lid']);
 $user = $I->signInAsAdministrator();
 
 $I->haveANotification($user, [
-	'user_id' => $user->id,
-	'object_id' => $user->sanghas()->where('sanghaname', '=', 'Mijn sangha')->first()->id
+    'user_id' => $user->id,
+    'object_id' => $user->sanghas()->where('sanghaname', '=', 'Mijn sangha')->first()->id
 ]);
 
 $I->see('1');

@@ -1,34 +1,35 @@
 <?php
 namespace Sanghaplanner\Roles;
 
-interface RoleRepositoryInterface {
+interface RoleRepositoryInterface
+{
 
-	/**
-	 * Get all records from model
-	 *
-	 */
-	public function getAll();
+    /**
+     * Get all records from model
+     *
+     */
+    public function getAll();
 
-	/**
-	 * Gets a record from the model table by id
-	 *
-	 * @param integer $id
-	 */
-	public function findById($id);
+    /**
+     * Gets a record from the model table by id
+     *
+     * @param integer $id
+     */
+    public function findById($id);
 
-	/**
-	 * Persist a role
-	 *
-	 * @param Role $role
-	 * @return mixed
-	 */
-	public function save(Role $role);
+    /**
+     * Persist a role
+     *
+     * @param Role $role
+     * @return mixed
+     */
+    public function save(Role $role);
 
-	/**
-	 * Gets role data
-	 *
-	 * @param string $modelnaam
-	 * @return Sanghaplanner\Roles\Role
-	 */
-	public function getRoleByName($rolnaam);
+    /**
+     * Gets role data
+     *
+     * @param string $modelnaam
+     * @return Sanghaplanner\Roles\Role
+     */
+    public function getRoleByName($rolnaam);
 }

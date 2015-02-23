@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Facade;
 
-class Search extends Facade {
+class Search extends Facade
+{
 
-	protected static function getFacadeAccessor()
-	{
-		return 'search';
-	}
+    protected static function getFacadeAccessor()
+    {
+        return 'search';
+    }
 }

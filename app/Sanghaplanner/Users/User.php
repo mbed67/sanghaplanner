@@ -1,212 +1,136 @@
 <?php namespace Sanghaplanner\Users;
 
-use Illuminate\Auth\UserTrait;
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableTrait;
-use Illuminate\Auth\Reminders\RemindableInterface;
-use Eloquent;
-use Hash;
-use Laracasts\Commander\Events\EventGenerator;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Laracasts\Presenter\PresentableTrait;
-use Sanghaplanner\Registration\Events\UserRegistered;
+use App\Events\UserRegistered;
 use Sanghaplanner\Sanghas\Sangha;
 use Sanghaplanner\Roles\Role;
 use Sanghaplanner\Pivot\SanghaUser;
 
-class User extends Eloquent implements UserInterface, RemindableInterface {
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract
+{
 
-use UserTrait, RemindableTrait, EventGenerator, PresentableTrait;
+    use Authenticatable, CanResetPassword, PresentableTrait;
 
-	/**
-	 * Which fields may be mass assigned
-	 * @var array
-	 */
-	protected $fillable = [
-		'email',
-		'password',
-		'firstname',
-		'middlename',
-		'lastname',
-		'address',
-		'zipcode',
-		'place',
-		'phone',
-		'gsm'
-	];
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
 
-	/**
-	 * Path to the presenter for the user
-	 *
-	 * @var string
-	 */
-	protected $presenter = 'Sanghaplanner\Users\UserPresenter';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'email',
+        'password',
+        'firstname',
+        'middlename',
+        'lastname',
+        'address',
+        'zipcode',
+        'place',
+        'phone',
+        'gsm'
+    ];
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'users';
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = ['password', 'remember_token'];
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	protected $hidden = array('password', 'remember_token');
+    /**
+     * Path to the presenter for the user
+     *
+     * @var string
+     */
+    protected $presenter = 'Sanghaplanner\Users\UserPresenter';
 
+    /**
+     * A user has many roles
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('Sanghaplanner\Roles\Role')->withTimestamps();
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getRememberToken()
-	{
-		return $this->remember_token;
-	}
+    /**
+     * A user has many sanghas
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function sanghas()
+    {
+        return $this->belongsToMany('Sanghaplanner\Sanghas\Sangha')->withTimestamps()->withPivot('role_id');
+    }
 
-	/**
-	 * @param string $value
-	 */
-	public function setRememberToken($value)
-	{
-		$this->remember_token = $value;
-	}
+    /**
+     * This is a relationship to the pivot table. You need not know the parameters
+     * in order to call this method.
+     * Just do for instance $user->pivot->role->rolename
+     *
+     * @param Model $parent
+     * @param $attributes
+     * @param $table
+     * @param $exists
+     * @return mixed
+     */
+    public function newPivot(Model $parent, array $attributes, $table, $exists)
+    {
+        if ($parent instanceof Sangha) {
+            return new SanghaUser($parent, $attributes, $table, $exists);
+        }
+        return parent::newPivot($parent, $attributes, $table, $exists);
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getRememberTokenName()
-	{
-		return 'remember_token';
-	}
+    /**
+     * A user has many notifications
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function notifications()
+    {
+        return $this->hasMany('Sanghaplanner\Notifications\Notification');
+    }
 
-	/**
-	 * Passwords must always be hashed
-	 *
-	 * @param $password
-	 */
-	public function setPasswordAttribute($password)
-	{
-		$this->attributes['password'] = Hash::make($password);
-	}
+    /**
+     * Find a user based on input from a search box
+     *
+     * @param $query
+     * @param $search
+     * @return mixed
+     */
+    public function scopeSearch($query, $search)
+    {
+        return $query->where(function($query) use ($search) {
+            $query->where('firstname', 'LIKE', "%$search%")
+            ->orWhere('lastname', 'LIKE', "%$search%");
+        });
+    }
 
-	/**
-	 * Register een new user
-	 *
-	 * @param $username
-	 * @param $email
-	 * @param $password
-	 * @return static
-	 */
-	public static function register(
-		$email,
-		$password,
-		$firstname,
-		$middlename,
-		$lastname,
-		$address,
-		$zipcode,
-		$place,
-		$phone,
-		$gsm
-	) {
-		$user = new static(compact(
-			'email',
-			'password',
-			'firstname',
-			'middlename',
-			'lastname',
-			'address',
-			'zipcode',
-			'place',
-			'phone',
-			'gsm'
-		));
+    /**
+     * Returns the role the user has for this sangha
+     *
+     * @param $id
+     * @return Sanghaplanner\Roles\Role
+     */
+    public function roleForSangha($id)
+    {
+        if ($this->sanghas->find($id)) {
+            $role = $this->sanghas->find($id)->pivot->role->rolename;
 
-		$user->raise(new UserRegistered($user));
-
-		return $user;
-	}
-
-	/**
-	 * A user has many roles
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-	 */
-	public function roles()
-	{
-		return $this->belongsToMany('Sanghaplanner\Roles\Role')->withTimestamps();
-	}
-
-	/**
-	 * A user has many sanghas
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-	 */
-	public function sanghas()
-	{
-		return $this->belongsToMany('Sanghaplanner\Sanghas\Sangha')->withTimestamps()->withPivot('role_id');
-	}
-
-	/**
-	 * This is a relationship to the pivot table. You need not know the parameters
-	 * in order to call this method.
-	 * Just do for instance $user->pivot->role->rolename
-	 *
-	 * @param Eloquent $parent
-	 * @param $attributes
-	 * @param $table
-	 * @param $exists
-	 * @return mixed
-	 */
-	public function newPivot(Eloquent $parent, array $attributes, $table, $exists)
-	{
-		if ($parent instanceof Sangha)
-		{
-			return new SanghaUser($parent, $attributes, $table, $exists);
-		}
-		return parent::newPivot($parent, $attributes, $table, $exists);
-	}
-
-	/**
-	 * A user has many notifications
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
-	 */
-	public function notifications()
-	{
-		return $this->hasMany('Sanghaplanner\Notifications\Notification');
-	}
-
-	/**
-	 * Find a user based on input from a search box
-	 *
-	 * @param $query
-	 * @param $search
-	 * @return mixed
-	 */
-	public function scopeSearch($query, $search)
-	{
-		return $query->where(function($query) use ($search)
-		{
-			$query->where('firstname', 'LIKE', "%$search%")
-			->orWhere('lastname', 'LIKE', "%$search%");
-		});
-	}
-
-	/**
-	 * Returns the role the user has for this sangha
-	 *
-	 * @param $id
-	 * @return Sanghaplanner\Roles\Role
-	 */
-	public function roleForSangha($id)
-	{
-		if ($this->sanghas->find($id))
-		{
-			$role = $this->sanghas->find($id)->pivot->role->rolename;
-
-			return $role;
-		}
-	}
+            return $role;
+        }
+    }
 }
