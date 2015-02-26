@@ -2,9 +2,9 @@
 $I = new FunctionalTester($scenario);
 
 $I->am('a Sanghaplanner member');
-$I->wantTo('join and unjoin a Sangha');
+$I->wantTo('join a Sangha');
 
-$I->haveASanghaWithAnAdministrator();
+$I->haveASanghaWithRole('administrator');
 $I->signIn();
 
 $I->click('Sangha\'s');

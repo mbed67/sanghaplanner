@@ -5,7 +5,7 @@ $I->am('a Sangha admin');
 $I->wantTo('approve a membership');
 
 $I->have('Sanghaplanner\Roles\Role', ['rolename' => 'lid']);
-$user = $I->signInAsAdministrator();
+$user = $I->signInAsRole('administrator');
 
 $I->haveANotification($user, [
     'user_id' => $user->id,

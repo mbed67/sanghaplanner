@@ -59,6 +59,21 @@ class DbSanghaRepository extends DbRepository implements SanghaRepositoryInterfa
     }
 
     /**
+     * Deletes a record from pivot table sangha_user
+     *
+     * @param Sangha $sangha
+     * @param User $user
+     */
+    public function deleteSanghaUser(Sangha $sangha, User $user)
+    {
+        if ($sangha->users()->find($user->id)) {
+            $sangha->users()->detach($user->id);
+
+            return true;
+        }
+    }
+
+    /**
      * Find a sangha based on input from a search box
      *
      * @param $search

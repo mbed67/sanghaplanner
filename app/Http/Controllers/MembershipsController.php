@@ -2,7 +2,9 @@
 
 use App\Commands\ApproveMemberCommand;
 use App\Commands\RejectMemberCommand;
+use App\Commands\LeaveSanghaCommand;
 use App\Http\Requests\ApproveOrRejectMemberRequest;
+use App\Http\Requests\LeaveSanghaRequest;
 use Request;
 use Auth;
 
@@ -91,11 +93,15 @@ class MembershipsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  LeaveSanghaRequest $request
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(LeaveSanghaRequest $request)
     {
-        //
+        $request['userId'] = Auth::id();
+
+        $this->dispatchFrom(LeaveSanghaCommand::class, $request);
+
+        return redirect('/sanghas');
     }
 }

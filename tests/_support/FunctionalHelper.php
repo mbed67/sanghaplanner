@@ -55,10 +55,10 @@ class FunctionalHelper extends \Codeception\Module
         ]);
     }
 
-    public function haveASanghaWithAnAdministrator()
+    public function haveASanghaWithRole($role)
     {
         $role = TestDummy::create('Sanghaplanner\Roles\Role', [
-            'rolename' => 'administrator'
+            'rolename' => $role
         ]);
 
         $sangha = TestDummy::create('Sanghaplanner\Sanghas\Sangha', [
@@ -66,14 +66,15 @@ class FunctionalHelper extends \Codeception\Module
         ]);
 
         $user = TestDummy::create('Sanghaplanner\Users\User', [
-            'email' => 'admin@example.com',
-            'password' => bcrypt('adminadmin')
+            'email' => 'myrole@example.com',
+            'password' => bcrypt('rolerole')
         ]);
 
         $user->sanghas()->attach($sangha->id, array('role_id' => $role->id));
 
         return $user;
     }
+
 
     public function haveAnAccount($overrides = [])
     {
@@ -85,14 +86,14 @@ class FunctionalHelper extends \Codeception\Module
         return TestDummy::create($model, $overrides);
     }
 
-    public function signInAsAdministrator()
+    public function signInAsRole($role)
     {
-        $user = $this->haveASanghaWithAnAdministrator();
+        $user = $this->haveASanghaWithRole($role);
         $I = $this->getModule('Laravel5');
 
         $I->amOnPage('/auth/login');
-        $I->fillField('email', 'admin@example.com');
-        $I->fillField('password', 'adminadmin');
+        $I->fillField('email', 'myrole@example.com');
+        $I->fillField('password', 'rolerole');
         $I->click('Inloggen');
 
         return $user;

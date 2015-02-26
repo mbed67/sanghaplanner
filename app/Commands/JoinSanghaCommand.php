@@ -17,13 +17,13 @@ class JoinSanghaCommand extends Command implements SelfHandling
     protected $userId;
 
     /**
-     * @var string $sanghaIdToJoin
+     * @var int $sanghaIdToJoin
      */
     protected $sanghaIdToJoin;
 
     /**
      * @param integer userId
-     * @param string sanghaIdToJoin
+     * @param integer sanghaIdToJoin
      */
     public function __construct($userId, $sanghaIdToJoin)
     {

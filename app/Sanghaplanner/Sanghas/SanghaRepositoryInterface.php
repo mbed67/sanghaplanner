@@ -42,6 +42,14 @@ interface SanghaRepositoryInterface
     public function createSanghaUser(Sangha $sangha, User $user, $role_id);
 
     /**
+     * Deletes a record from pivot table sangha_user
+     *
+     * @param Sangha $sangha
+     * @param User $user
+     */
+    public function deleteSanghaUser(Sangha $sangha, User $user);
+
+    /**
      * Find a sangha based on input from a search box
      *
      * @param $search

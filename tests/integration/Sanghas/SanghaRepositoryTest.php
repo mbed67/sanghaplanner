@@ -88,4 +88,18 @@ class SanghaRepositoryTest extends \Codeception\TestCase\Test
 
         $this->assertCount(2, $results);
     }
+
+    /** @tests */
+    public function it_removes_a_user_from_a_sangha()
+    {
+        $sangha = $this->tester->haveASanghaWithTwoAdmins();
+        $user = $sangha->users()->first();
+
+        $this->tester->seeRecord('sangha_user', ['user_id' => $user->id]);
+
+        $results = $this->repo->deleteSanghaUser($sangha, $user);
+
+        $this->tester->dontSeeRecord('sangha_user', ['user_id' => $user->id]);
+    }
+
 }
