@@ -76,4 +76,21 @@ class DbUserRepository extends DbRepository implements UserRepositoryInterface
 
         }))->find($id);
     }
+
+    /**
+     * Toggle the role of the user
+     *
+     * @param integer $userId
+     * @param integer $sanghaId
+     */
+    public function toggleRole($userId, $sanghaId)
+    {
+        $user = $this->model->find($userId);
+
+        if ($user->roleForSangha($sanghaId) == 'administrator') {
+            $user->sanghas()->updateExistingPivot($sanghaId, ['role_id' => 2]);
+        } elseif ($user->roleForSangha($sanghaId) == 'lid') {
+            $user->sanghas()->updateExistingPivot($sanghaId, ['role_id' => 1]);
+        }
+    }
 }

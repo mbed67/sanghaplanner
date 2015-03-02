@@ -8,6 +8,5 @@ $I->haveASanghaWithRole('administrator');
 $I->signIn();
 
 $I->click('Sangha\'s');
-$I->click('Mijn sangha');
-$I->click('Vraag lidmaatschap aan voor sangha Mijn sangha');
+$I->click('Lid worden');
 $I->see('Je verzoek is verstuurd');

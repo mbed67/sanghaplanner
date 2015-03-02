@@ -5,7 +5,7 @@
   <!-- Table -->
 
     <table class="table">
-      <tr><th>Lid</th><th>rol</th></tr>
+      <tr><th>Naam</th><th>Adres</th><th>Telefoon</th><th>Email</th><th>Rol</th></tr>
       @forelse($users as $user)
         @include('users.partials.user')
       @empty

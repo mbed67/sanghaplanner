@@ -3,9 +3,12 @@
 use App\Commands\ApproveMemberCommand;
 use App\Commands\RejectMemberCommand;
 use App\Commands\LeaveSanghaCommand;
+use App\Commands\ToggleRoleCommand;
 use App\Http\Requests\ApproveOrRejectMemberRequest;
 use App\Http\Requests\LeaveSanghaRequest;
+use App\Http\Requests\ToggleRoleRequest;
 use Request;
+use Redirect;
 use Auth;
 
 class MembershipsController extends Controller
@@ -44,12 +47,12 @@ class MembershipsController extends Controller
         if (Request::exists('approve_button')) {
             $this->dispatchFrom(ApproveMemberCommand::class, $request);
 
-            return redirect('/sanghas');
+            return Redirect::back();
 
         } else {
             $this->dispatchFrom(RejectMemberCommand::class, $request);
 
-            return redirect('/sanghas');
+            return Redirect::back();
         }
     }
 
@@ -84,9 +87,11 @@ class MembershipsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update(ToggleRoleRequest $request)
     {
-        //
+        $this->dispatchFrom(ToggleRoleCommand::class, $request);
+
+        return Redirect::back();
     }
 
 
@@ -98,10 +103,8 @@ class MembershipsController extends Controller
      */
     public function destroy(LeaveSanghaRequest $request)
     {
-        $request['userId'] = Auth::id();
-
         $this->dispatchFrom(LeaveSanghaCommand::class, $request);
 
-        return redirect('/sanghas');
+        return Redirect::back();
     }
 }

@@ -53,4 +53,12 @@ interface UserRepositoryInterface
      * @return mixed
      */
     public function findUserWithAllNotifications($id);
+
+    /**
+     * Toggle the role of the user
+     *
+     * @param integer $userId
+     * @param integer $sanghaId
+     */
+    public function toggleRole($userId, $sanghaId);
 }

@@ -75,12 +75,13 @@ Route::post('createsangha', [
         ]);
 
 Route::get('sanghas/{id}', [
+        'middleware' => 'memberOfSangha',
         'as' => 'sanghadetails_path',
         'uses' => 'SanghasController@show'
         ]);
 
 Route::put('sanghas/{id}', [
-        'before' => 'adminForSangha',
+        'middleware' => 'adminForSangha',
         'as' => 'sanghadetails_path',
         'uses' => 'SanghasController@update'
         ]);
@@ -109,6 +110,7 @@ Route::post('createrole', [
 /**
  * Memberships
  */
+
 Route::post('membership', [
         'as' => 'memberships_path',
         'uses' => 'MembershipsController@store'
@@ -117,6 +119,11 @@ Route::post('membership', [
 Route::delete('membership/{id}', [
         'as' => 'membership_path',
         'uses' => 'MembershipsController@destroy'
+        ]);
+
+Route::put('updatemembership', [
+        'as' => 'updatemembership_path',
+        'uses' => 'MembershipsController@update'
         ]);
 
 /**

@@ -79,4 +79,21 @@ class UserRepositoryTest extends \Codeception\TestCase\Test
 
         $this->assertCount(4, $notifications);
     }
+
+    /** @tests */
+    public function it_toggles_a_users_role()
+    {
+        $user = $this->tester->haveAUserWithTwoSanghas();
+
+        $sangha = $user->sanghas()->first();
+
+        $this->repo->toggleRole($user->id, $sangha->id);
+
+        $this->tester->seeRecord('sangha_user', ['sangha_id' => $sangha->id, 'role_id' => 2]);
+
+        $this->repo->toggleRole($user->id, $sangha->id);
+
+        $this->tester->seeRecord('sangha_user', ['sangha_id' => $sangha->id, 'role_id' => 1]);
+        $this->tester->dontSeeRecord('sangha_user', ['sangha_id' => $sangha->id, 'role_id' => 2]);
+    }
 }

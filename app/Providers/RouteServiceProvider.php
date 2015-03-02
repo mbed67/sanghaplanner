@@ -26,16 +26,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot($router);
 
-        Route::filter('adminForSangha', function() {
-            $id = Request::segment(2);
-
-            if (Auth::guest()
-                or ! Auth::user()->sanghas->find($id)
-                or 'administrator' !== Auth::user()->roleForSangha($id)
-            ) {
-                return Redirect::guest('/auth/login');
-            }
-        });
+        //
     }
 
     /**

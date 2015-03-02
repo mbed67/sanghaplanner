@@ -22,8 +22,8 @@ class LeaveSanghaCommand extends Command implements SelfHandling
     protected $sanghaIdToUnjoin;
 
     /**
-     * @param int $user_id
-     * @param int $sangha_id
+     * @param int $userId
+     * @param int $sanghaIdToUnjoin
      */
     public function __construct($userId, $sanghaIdToUnjoin)
     {
@@ -48,8 +48,6 @@ class LeaveSanghaCommand extends Command implements SelfHandling
         $user = $userRepository->findById($this->userId);
 
         if ($sanghaRepository->deleteSanghaUser($sangha, $user)) {
-            Flash::success('Je bent geen lid meer van ' . $sangha->sanghaname);
-
             $event->fire(new LeftASangha($user, $sangha));
 
         }

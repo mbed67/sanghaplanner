@@ -22,6 +22,5 @@ $I->see('Goedkeuren');
 $I->see('Afwijzen');
 $I->click('Goedkeuren');
 $I->see('Deze persoon is nu lid van sangha Mijn sangha');
-$I->click('Mijn sangha');
-$I->see('<td> lid </td>');
+$I->see('<td class="col-md-1"> lid');
 $I->see('Er zijn geen verzoeken');

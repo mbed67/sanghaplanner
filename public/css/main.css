@@ -2,6 +2,17 @@
   background: #00BAE9;
   border: 1px solid #0091b6; }
 
+.btn-settings {
+  color: #333;
+  background-color: #fff; }
+
+.btn-dropdown {
+  background-color: #fff;
+  border: none;
+  padding: 3px 15px; }
+  .btn-dropdown:hover {
+    color: #2C6C91; }
+
 .navbar-default {
   background-color: #00BAE9;
   border-color: #f3f3f3; }

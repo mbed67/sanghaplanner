@@ -2,3 +2,19 @@
     background: #00BAE9;
     border: 1px solid darken(#00BAE9, 10%);
 }
+
+.btn-settings {
+    color: #333;
+    background-color: #fff;
+}
+
+.btn-dropdown {
+    background-color: #fff;
+    border: none;
+    padding: 3px 15px;
+    
+    &:hover {
+    color: #2C6C91;
+    }
+    
+}

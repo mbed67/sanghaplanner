@@ -1,13 +1,8 @@
 @if (Auth::user())
-    @if (Auth::user()->sanghas->find($sangha->id))
-        {!! Form::open(['method' => 'DELETE', 'route' => ['membership_path', $sangha->id]]) !!}
-            {!! Form::hidden('sanghaIdToUnjoin', $sangha->id) !!}
-            <button type="submit" class="btn btn-danger">Verlaat sangha {{ $sangha->sanghaname }}</button>
-        {!! Form::close() !!}
-        @else
+    @if (! Auth::user()->sanghas->find($sangha->id))
         {!! Form::open(['route' => 'notifications_path']) !!}
             {!! Form::hidden('sanghaIdToJoin', $sangha->id) !!}
-            <button type="submit" class="btn btn-primary">Vraag lidmaatschap aan voor sangha {{ $sangha->sanghaname }}</button>
+            <button type="submit" class="btn btn-default btn-xs">Lid worden</button>
         {!! Form::close() !!}
     @endif
 @endif

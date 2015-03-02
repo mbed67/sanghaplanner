@@ -123,7 +123,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * Returns the role the user has for this sangha
      *
      * @param $id
-     * @return Sanghaplanner\Roles\Role
+     * @return string
      */
     public function roleForSangha($id)
     {

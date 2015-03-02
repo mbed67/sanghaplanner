@@ -3,18 +3,27 @@
 @extends('layouts.default')
 
 @section('content')
-	<h1>Alle sanghas</h1>
-	@if ($sanghas->count())
 	<div class="row">
         <div class="col-md-6">
-        	<ul class="list-group">
-            	@foreach($sanghas as $sangha)
-            	    <li class="list-group-item">{!!link_to("/sanghas/{$sangha->id}", $sangha->sanghaname) !!}</li>
-            	@endforeach
-            </ul>
+
+            @if ($sanghas->count())
+            <div class="panel panel-default">
+              <!-- Default panel contents -->
+              <div class="panel-heading">Alle sanghas</div>
+
+              <!-- Table -->
+              <table class="table">
+                @foreach($sanghas as $sangha)
+                 <tr>
+                    <td>{!!link_to("/sanghas/{$sangha->id}", $sangha->sanghaname) !!}</td>
+                    <td>@include('sanghas.partials.join-sangha')</td>
+                </tr>
+                @endforeach
+              </table>
+            </div>
             @else
                 Er zijn geen sangha's
-        	@endif
+            @endif
 
         	<div class="form-group">
         	    {!! link_to_route('createsangha_path', 'Maak een nieuwe sangha aan', null, ['class' => 'btn btn-primary']) !!}
