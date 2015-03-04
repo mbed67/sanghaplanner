@@ -30,5 +30,6 @@ class Kernel extends HttpKernel
         'guest' => 'App\Http\Middleware\RedirectIfAuthenticated',
         'adminForSangha' => 'App\Http\Middleware\AdminForSangha',
         'memberOfSangha' => 'App\Http\Middleware\MemberOfSangha',
+        'ownerOfProfile' => 'App\Http\Middleware\OwnerOfProfile',
     ];
 }

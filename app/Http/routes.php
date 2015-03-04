@@ -45,6 +45,17 @@ Route::get('users/{id}', [
         'uses' => 'UsersController@show'
         ]);
 
+Route::get('users/{id}/edit', [
+        'middleware' => 'ownerOfProfile',
+        'as' => 'edit_profile_path',
+        'uses' => 'UsersController@edit'
+        ]);
+
+Route::put('users/{id}', [
+        'middleware' => 'ownerOfProfile',
+        'as' => 'update_profile_path',
+        'uses' => 'UsersController@update'
+        ]);
 
 /**
  * Authentication and Password resets

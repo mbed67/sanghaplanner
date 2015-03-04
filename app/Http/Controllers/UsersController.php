@@ -2,8 +2,11 @@
 
 use Sanghaplanner\Users\UserRepositoryInterface;
 use Sanghaplanner\Users\User;
+use App\Http\Requests\EditUserRequest;
+use App\Commands\EditUserCommand;
 use Sanghaplanner\Facades\Search;
 use Request;
+use \Laracasts\Flash\Flash;
 
 class UsersController extends Controller
 {
@@ -86,7 +89,9 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = $this->userRepository->findById($id);
+
+        return view('users.edit', ['user' => $user]);
     }
 
 
@@ -96,9 +101,14 @@ class UsersController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update(EditUserRequest $request, $id)
     {
-        //
+
+        $this->dispatchFrom(EditUserCommand::class, $request);
+
+        Flash::success('De gegevens zijn gewijzigd');
+
+        return redirect('/users/' . $id);
     }
 
 
