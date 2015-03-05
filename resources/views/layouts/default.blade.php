@@ -19,5 +19,6 @@
 	<script>
 	   $('#flash-overlay-modal').modal();
     </script>
+    <script src="/js/sanghaTabs.js"></script>
 </body>
 </html>
