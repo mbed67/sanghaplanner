@@ -17,6 +17,11 @@ class CreateSanghasTable extends Migration
         {
             $table->increments('id');
             $table->string('sanghaname');
+            $table->string('address');
+            $table->string('zipcode');
+            $table->string('place');
+            $table->string('filename')->nullable();
+            $table->string('thumbnailName');
             $table->timestamps();
         });
     }
