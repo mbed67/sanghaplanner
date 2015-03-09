@@ -17,6 +17,11 @@ $factory('Sanghaplanner\Users\User', [
 
 $factory('Sanghaplanner\Sanghas\Sangha', [
     'sanghaname' => 'Mijn sangha',
+    'address' => $faker->streetAddress,
+    'zipcode' => $faker->postcode,
+    'place' => $faker->city,
+    'filename' => $faker->word,
+    'thumbnailName' => $faker->word,
     'created_at' => $faker->dateTime($max = 'now'),
     'updated_at' => $faker->dateTime($max = 'now')
 ]);

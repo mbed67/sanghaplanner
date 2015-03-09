@@ -12,7 +12,14 @@ class Sangha extends Eloquent
      * Which fields may be mass assigned
      * @var array
      */
-    protected $fillable = ['sanghaname'];
+    protected $fillable = [
+        'sanghaname',
+        'address',
+        'zipcode',
+        'place',
+        'filename',
+        'thumbnailName'
+    ];
 
     /**
      * The database table used by the model.
@@ -58,9 +65,22 @@ class Sangha extends Eloquent
      * @param $password
      * @return static
      */
-    public static function createSangha($sanghaname)
-    {
-        $sangha = new static(compact('sanghaname'));
+    public static function createSangha(
+        $sanghaname,
+        $address,
+        $zipcode,
+        $place,
+        $filename,
+        $thumbnailName
+    ) {
+        $sangha = new static(compact(
+            'sanghaname',
+            'address',
+            'zipcode',
+            'place',
+            'filename',
+            'thumbnailName'
+        ));
 
         return $sangha;
     }

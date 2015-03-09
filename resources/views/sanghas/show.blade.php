@@ -19,49 +19,83 @@
 
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="algemeen">
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Nulla sollicitudin eu ipsum ut porta.
-                Nulla fermentum neque ut neque tincidunt, eget dictum turpis placerat.
-                Maecenas volutpat augue id elementum cursus.
-                Sed aliquam purus eget enim egestas fermentum.
-                Aenean pharetra nisl in maximus rutrum.
-                Maecenas finibus leo ac ullamcorper eleifend.
-                Proin vulputate rutrum tortor, sed gravida erat tincidunt et.
-            </p>
+            <div class="row">
+                <div class="col-md-9">
+                   <div class="panel panel-default">
+                      <!-- Default panel contents -->
+                      <div class="panel-heading">Contactgegevens</div>
+
+                      <!-- Table -->
+                      <table class="table">
+                        <tr>
+                            <td>Adres</td>
+                            <td>
+                                {{ $sangha->address }}<br>
+                                {{ $sangha->zipcode }} {{ '&nbsp;' . $sangha->place }}
+                            </td>
+                        </tr>
+                        @include('users.partials.admins', ['admins' => $admins])
+                      </table>
+                    </div>
+                    @if(Auth::user()->roleForSangha($sangha->id) == 'administrator')
+                        <div class="form-group">
+                    	    {!! link_to_route('edit_sangha_path', 'Wijzig gegevens', e($sangha->id), ['class' => 'btn btn-primary']) !!}
+                    	</div>
+                    @endif
+                  </div>
+                  <div class="col-md-3">
+                    @if ($sangha->filename)
+                        <div class="media">
+                            <img class="media-object" src="/images/{!! str_replace(' ', '_', e($sangha->sanghaname)) !!}/{{ $sangha->filename }}" alt="{{ $sangha->sanghaname }}">
+                        </div>
+                    @endif
+                  </div>
+            </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="sanghaleden">
             <div class="row">
                 <div class="col-md-9">
+                    @if(Auth::user()->sanghas->find($sangha->id))
                         <div>
                             @include('users.partials.users', ['users' => $sangha->users])
                         </div>
                         <div>
                         	@include('sanghas.partials.leave-sangha')
                         </div>
+                    @else
+                        <div class="alert alert-warning">U moet lid zijn om deze pagina te kunnen bekijken</div>
+                    @endif
                  </div>
                  <div class="col-md-3">
-                        @if(Auth::user()->roleForSangha($sangha->id) == 'administrator')
-            	            <div>
-            	            	@include('notifications.partials.membershipRequests', ['notifications' => $notifications])
-            	            </div>
-                        @endif
+                    @if(Auth::user()->roleForSangha($sangha->id) == 'administrator')
+        	            <div>
+        	            	@include('notifications.partials.membershipRequests', ['notifications' => $notifications])
+        	            </div>
+                    @endif
                  </div>
              </div>
           </div>
           <div role="tabpanel" class="tab-pane" id="evenementen">
-              <p>
-                  Proin ex mauris, elementum non nisi vitae, dictum hendrerit nulla.
-                  Etiam fringilla libero vel eros malesuada, id viverra sem sollicitudin.
-                  Sed libero enim, laoreet at vulputate vel, congue ut lectus.
-                  Praesent magna dui, auctor non lacinia at, euismod et purus.
-                  In hac habitasse platea dictumst.
-                  Suspendisse tristique lectus eu neque sollicitudin porta.
-                  Nam convallis blandit ullamcorper.
-                  Morbi facilisis gravida nibh, in auctor leo porta semper.
-                  Phasellus sit amet blandit lacus.
-              </p>
-          </div>
+            <div class="row">
+                <div class="col-md-9">
+                    @if(Auth::user()->sanghas->find($sangha->id))
+                        <div>
+                          Proin ex mauris, elementum non nisi vitae, dictum hendrerit nulla.
+                          Etiam fringilla libero vel eros malesuada, id viverra sem sollicitudin.
+                          Sed libero enim, laoreet at vulputate vel, congue ut lectus.
+                          Praesent magna dui, auctor non lacinia at, euismod et purus.
+                          In hac habitasse platea dictumst.
+                          Suspendisse tristique lectus eu neque sollicitudin porta.
+                          Nam convallis blandit ullamcorper.
+                          Morbi facilisis gravida nibh, in auctor leo porta semper.
+                          Phasellus sit amet blandit lacus.
+                        </div>
+                    @else
+                        <div class="alert alert-warning">U moet lid zijn om deze pagina te kunnen bekijken</div>
+                    @endif
+                 </div>
+             </div>
+           </div>
     </div>
 
 @stop

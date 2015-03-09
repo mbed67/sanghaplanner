@@ -7,17 +7,16 @@ use Sanghaplanner\Users\UserRepositoryInterface;
 use Sanghaplanner\Sanghas\SanghaRepositoryInterface;
 use Sanghaplanner\Sanghas\Sangha;
 use Illuminate\Contracts\Bus\SelfHandling;
-use Illuminate\Contracts\Events\Dispatcher;
 use Image;
 use File;
 
-class CreateSanghaCommand extends Command implements SelfHandling
+class EditSanghaCommand extends Command implements SelfHandling
 {
 
     /**
      * @var int
      */
-    public $userId;
+    public $id;
 
     /**
      * @var string
@@ -50,7 +49,7 @@ class CreateSanghaCommand extends Command implements SelfHandling
     public $fileName;
 
     /**
-     * @param int $userId
+     * @param int $id
      * @param string $sanghaname
      * @param string $address
      * @param string $zipcode
@@ -59,7 +58,7 @@ class CreateSanghaCommand extends Command implements SelfHandling
      * @param string $fileName
      */
     public function __construct(
-        $userId,
+        $id,
         $sanghaname,
         $address,
         $zipcode,
@@ -67,7 +66,7 @@ class CreateSanghaCommand extends Command implements SelfHandling
         $filePath,
         $fileName
     ) {
-        $this->userId = $userId;
+        $this->id = $id;
         $this->sanghaname = $sanghaname;
         $this->address = $address;
         $this->zipcode = $zipcode;
@@ -80,41 +79,26 @@ class CreateSanghaCommand extends Command implements SelfHandling
      * Execute the command.
      *
      * @param sanghaRepositoryInterface $sanghaRepository
-     * @param UserRepositoryInterface $userRepository
-     * @param RoleRepositoryInterface $roleRepository
-     * @param Dispatcher $event
      *
      * @return void
      */
-    public function handle(
-        UserRepositoryInterface $userRepository,
-        SanghaRepositoryInterface $sanghaRepository,
-        RoleRepositoryInterface $roleRepository,
-        Dispatcher $event
-    ) {
-        $sangha = Sangha::createSangha(
-            $this->sanghaname,
-            $this->address,
-            $this->zipcode,
-            $this->place,
-            $this->fileName,
-            'tn_' . $this->fileName
-        );
+    public function handle(SanghaRepositoryInterface $repository)
+    {
+        $sangha = $repository->findById($this->id);
 
-        $user = $userRepository->findById($this->userId);
-        $role = $roleRepository->getRoleByName('administrator')->id;
+        $sangha->sanghaname = $this->sanghaname;
+        $sangha->address = $this->address;
+        $sangha->zipcode = $this->zipcode;
+        $sangha->place = $this->place;
 
         if (isset($this->fileName)) {
+            $sangha->fileName = $this->fileName;
+            $sangha->thumbnailName = 'tn_' . $this->fileName;
+
             $this->savePhoto();
         }
 
-        $sanghaRepository->save($sangha);
-
-        $sanghaRepository->createSanghaUser($sangha, $user, $role);
-
-        $event->fire(new SanghaCreated($sangha));
-
-        return $sangha;
+        $repository->save($sangha);
 
     }
 

@@ -2,8 +2,11 @@
 
 use Auth;
 use App\Http\Requests\CreateSanghaRequest;
+use App\Http\Requests\EditSanghaRequest;
 use App\Commands\CreateSanghaCommand;
+use App\Commands\EditSanghaCommand;
 use Sanghaplanner\Sanghas\SanghaRepositoryInterface;
+use Sanghaplanner\Roles\RoleRepositoryInterface;
 use Sanghaplanner\Notifications\NotificationRepositoryInterface;
 use Sanghaplanner\Facades\Search;
 use \Laracasts\Flash\Flash;
@@ -17,19 +20,27 @@ class SanghasController extends Controller
     private $sanghaRepository;
 
     /**
+     * @var RoleRepositoryInterface
+     */
+    private $roleRepository;
+
+    /**
      * @var NotificationRepositoryInterface
      */
     private $notificationRepository;
 
     /**
      * @param SanghaRepositoryInterface $sanghaRepository
+     * @param RoleRepositoryInterface $roleRepository
      * @param NotificationRepositoryInterface $notificationRepository
      */
     public function __construct(
         SanghaRepositoryInterface $sanghaRepository,
+        RoleRepositoryInterface $roleRepository,
         NotificationRepositoryInterface $notificationRepository
     ) {
         $this->sanghaRepository = $sanghaRepository;
+        $this->roleRepository = $roleRepository;
         $this->notificationRepository = $notificationRepository;
 
         parent::__construct();
@@ -70,9 +81,16 @@ class SanghasController extends Controller
      */
     public function store(CreateSanghaRequest $request)
     {
-        $request['userId'] = Auth::id();
+        if ($request->file('image')) {
+            $filePath = $request->file('image')->getRealPath();
+            $fileName = $request->file('image')->getClientOriginalName();
+        }
 
-        $sangha = $this->dispatchFrom(CreateSanghaCommand::class, $request);
+        $sangha = $this->dispatchFrom(CreateSanghaCommand::class, $request, [
+            'userId' => Auth::id(),
+            'filePath' => (isset($filePath) ? $filePath : null),
+            'fileName' => (isset($fileName) ? $fileName : null)
+        ]);
 
         Flash::success('De nieuwe sangha is aangemaakt.');
 
@@ -89,8 +107,14 @@ class SanghasController extends Controller
     {
         $sangha = $this->sanghaRepository->findSanghaWithUsers($id);
         $notifications = $this->notificationRepository->showMembershipRequestsForSangha($sangha, Auth::id());
+        $adminRole = $this->roleRepository->getRoleByName('administrator');
+        $admins = $this->sanghaRepository->findUsersByRoleForSangha($id, $adminRole->id);
 
-        return view('sanghas.show', ['sangha' => $sangha, 'notifications' => $notifications]);
+        return view('sanghas.show', [
+            'sangha' => $sangha,
+            'notifications' => $notifications,
+            'admins' => $admins
+        ]);
     }
 
 
@@ -102,7 +126,9 @@ class SanghasController extends Controller
      */
     public function edit($id)
     {
-        //
+        $sangha = $this->sanghaRepository->findById($id);
+
+        return view('sanghas.edit', ['sangha' => $sangha]);
     }
 
 
@@ -112,9 +138,21 @@ class SanghasController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update(EditSanghaRequest $request, $id)
     {
-        //
+        if ($request->file('image')) {
+            $filePath = $request->file('image')->getRealPath();
+            $fileName = $request->file('image')->getClientOriginalName();
+        }
+
+        $this->dispatchFrom(EditSanghaCommand::class, $request, [
+            'filePath' => (isset($filePath) ? $filePath : null),
+            'fileName' => (isset($fileName) ? $fileName : null)
+        ]);
+
+        Flash::success('De gegevens zijn gewijzigd');
+
+        return redirect('/sanghas/' . $id);
     }
 
 

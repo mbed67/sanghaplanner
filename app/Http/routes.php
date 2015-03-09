@@ -74,7 +74,6 @@ Route::get('sanghas', [
         'uses' => 'SanghasController@index'
         ]);
 
-
 Route::get('createsangha', [
         'as' => 'createsangha_path',
         'uses' => 'SanghasController@create'
@@ -86,14 +85,19 @@ Route::post('createsangha', [
         ]);
 
 Route::get('sanghas/{id}', [
-        'middleware' => 'memberOfSangha',
         'as' => 'sanghadetails_path',
         'uses' => 'SanghasController@show'
         ]);
 
-Route::put('sanghas/{id}', [
+Route::get('sanghas/{id}/edit', [
         'middleware' => 'adminForSangha',
-        'as' => 'sanghadetails_path',
+        'as' => 'edit_sangha_path',
+        'uses' => 'SanghasController@edit'
+        ]);
+
+Route::post('sanghas/{id}', [
+        'middleware' => 'adminForSangha',
+        'as' => 'update_sangha_path',
         'uses' => 'SanghasController@update'
         ]);
 

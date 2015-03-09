@@ -13,3 +13,4 @@ codeception.yml
 .buildpath
 /.settings
 /node_modules/
+/public/images
