@@ -18,8 +18,8 @@ class CreateTasksTable extends Migration
             $table->increments('id');
             $table->integer('sangha_user_id')->unsigned()->index();
             $table->foreign('sangha_user_id')->references('id')->on('sangha_user')->onDelete('cascade');
-            $table->integer('event_id')->unsigned()->index();
-            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table->integer('retreat_id')->unsigned()->index();
+            $table->foreign('retreat_id')->references('id')->on('retreats')->onDelete('cascade');
             $table->string('description');
             $table->timestamps();
         });
