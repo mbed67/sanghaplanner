@@ -80,16 +80,14 @@
                 <div class="col-md-9">
                     @if(Auth::user()->sanghas->find($sangha->id))
                         <div>
-                          Proin ex mauris, elementum non nisi vitae, dictum hendrerit nulla.
-                          Etiam fringilla libero vel eros malesuada, id viverra sem sollicitudin.
-                          Sed libero enim, laoreet at vulputate vel, congue ut lectus.
-                          Praesent magna dui, auctor non lacinia at, euismod et purus.
-                          In hac habitasse platea dictumst.
-                          Suspendisse tristique lectus eu neque sollicitudin porta.
-                          Nam convallis blandit ullamcorper.
-                          Morbi facilisis gravida nibh, in auctor leo porta semper.
-                          Phasellus sit amet blandit lacus.
+                            @include('retreats.partials.retreats', ['retreats' => $retreats, 'sangha' => $sangha])
                         </div>
+                        @if(Auth::user()->roleForSangha($sangha->id) == 'administrator')
+                            <div class="form-group">
+                        	    {!! link_to_route('sanghas.retreats.create', 'Nieuw evenement', e($sangha->id), ['class' => 'btn btn-primary']) !!}
+                        	</div>
+                    	@endif
+
                     @else
                         <div class="alert alert-warning">U moet lid zijn om deze pagina te kunnen bekijken</div>
                     @endif

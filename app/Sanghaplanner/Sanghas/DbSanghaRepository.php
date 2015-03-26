@@ -2,6 +2,7 @@
 
 use Sanghaplanner\Repositories\DbRepository;
 use Sanghaplanner\Users\User;
+use DB;
 
 class DbSanghaRepository extends DbRepository implements SanghaRepositoryInterface
 {
@@ -104,5 +105,39 @@ class DbSanghaRepository extends DbRepository implements SanghaRepositoryInterfa
     public function findUsersByRoleForSangha($sanghaId, $roleId)
     {
         return Sangha::find($sanghaId)->users()->wherePivot('role_id', '=', $roleId)->get();
+    }
+
+
+    /**
+     * returns the ids of the pivot table records for a sangha
+     *
+     * @param $sanghaId
+     * @returns array
+     */
+    public function findSanghaUserIdsForSangha($sanghaId)
+    {
+        $sanghaUserIds = DB::table('sangha_user')
+            ->where('sangha_id', '=', $sanghaId)
+            ->lists('id');
+
+        return $sanghaUserIds;
+    }
+
+    /**
+     * Returns the id on the pivot table for the user with this sangha
+     *
+     * @param $id
+     * @return string
+     */
+    public function findPivotId($sangha, $userId)
+    {
+        if ($sangha->users->find($userId)) {
+            $sanghaUserId = DB::table('sangha_user')
+            ->where('sangha_id', '=', $sangha->id)
+            ->where('user_id', '=', $userId)
+            ->pluck('id');
+
+            return $sanghaUserId;
+        }
     }
 }

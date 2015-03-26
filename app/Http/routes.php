@@ -153,3 +153,8 @@ Route::post('notifications', [
         'as' => 'notifications_path',
         'uses' => 'NotificationsController@store'
         ]);
+
+/**
+ * Retreats
+ */
+Route::resource('sanghas.retreats', 'SanghaRetreatController');

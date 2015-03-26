@@ -28,5 +28,13 @@ class BackendServiceProvider extends ServiceProvider
             'Sanghaplanner\Notifications\NotificationRepositoryInterface',
             'Sanghaplanner\Notifications\DbNotificationRepository'
         );
+        $this->app->bind(
+            'Sanghaplanner\Retreats\RetreatRepositoryInterface',
+            'Sanghaplanner\Retreats\DbRetreatRepository'
+        );
+        $this->app->bind(
+            'Sanghaplanner\Tasks\TaskRepositoryInterface',
+            'Sanghaplanner\Tasks\DbTaskRepository'
+        );
     }
 }

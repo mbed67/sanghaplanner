@@ -72,4 +72,20 @@ interface SanghaRepositoryInterface
      * @return mixed
      */
     public function findUsersByRoleForSangha($sanghaId, $roleId);
+
+    /**
+     * returns the ids of the pivot table records for a sangha
+     *
+     * @param $sanghaId
+     * @returns array
+     */
+    public function findSanghaUserIdsForSangha($sanghaId);
+
+    /**
+     * Returns the id on the pivot table for the user with this sangha
+     *
+     * @param $id
+     * @return string
+     */
+    public function findPivotId($sangha, $userId);
 }

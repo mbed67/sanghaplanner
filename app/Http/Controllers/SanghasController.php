@@ -8,6 +8,7 @@ use App\Commands\EditSanghaCommand;
 use Sanghaplanner\Sanghas\SanghaRepositoryInterface;
 use Sanghaplanner\Roles\RoleRepositoryInterface;
 use Sanghaplanner\Notifications\NotificationRepositoryInterface;
+use Sanghaplanner\Retreats\RetreatRepositoryInterface;
 use Sanghaplanner\Facades\Search;
 use \Laracasts\Flash\Flash;
 
@@ -30,18 +31,26 @@ class SanghasController extends Controller
     private $notificationRepository;
 
     /**
+     * @var RetreatRepositoryInterface
+     */
+    private $retreatRepository;
+
+    /**
      * @param SanghaRepositoryInterface $sanghaRepository
      * @param RoleRepositoryInterface $roleRepository
      * @param NotificationRepositoryInterface $notificationRepository
+     * @param RetreatRepositoryInterface $retreatRepository
      */
     public function __construct(
         SanghaRepositoryInterface $sanghaRepository,
         RoleRepositoryInterface $roleRepository,
-        NotificationRepositoryInterface $notificationRepository
+        NotificationRepositoryInterface $notificationRepository,
+        RetreatRepositoryInterface $retreatRepository
     ) {
         $this->sanghaRepository = $sanghaRepository;
         $this->roleRepository = $roleRepository;
         $this->notificationRepository = $notificationRepository;
+        $this->retreatRepository = $retreatRepository;
 
         parent::__construct();
     }
@@ -107,13 +116,14 @@ class SanghasController extends Controller
     {
         $sangha = $this->sanghaRepository->findSanghaWithUsers($id);
         $notifications = $this->notificationRepository->showMembershipRequestsForSangha($sangha, Auth::id());
-        $adminRole = $this->roleRepository->getRoleByName('administrator');
-        $admins = $this->sanghaRepository->findUsersByRoleForSangha($id, $adminRole->id);
+        $admins = $this->getAdmins($id);
+        $retreats = $this->getRetreats($id);
 
         return view('sanghas.show', [
             'sangha' => $sangha,
             'notifications' => $notifications,
-            'admins' => $admins
+            'admins' => $admins,
+            'retreats' => $retreats
         ]);
     }
 
@@ -165,5 +175,33 @@ class SanghasController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Returns the administrators for the sangha
+     *
+     * @param $sanghaId
+     * @return array
+     */
+    private function getAdmins($sanghaId)
+    {
+        $adminRole = $this->roleRepository->getRoleByName('administrator');
+        $admins = $this->sanghaRepository->findUsersByRoleForSangha($sanghaId, $adminRole->id);
+
+        return $admins;
+    }
+
+    /**
+     * Returns the retreats for the sangha
+     *
+     * @param $sanghaId
+     * @return array
+     */
+    private function getRetreats($sanghaId)
+    {
+        $sanghaUserIds = $this->sanghaRepository->findSanghaUserIdsForSangha($sanghaId);
+        $retreats = $this->retreatRepository->getRetreatsForSangha($sanghaUserIds);
+
+        return $retreats;
     }
 }

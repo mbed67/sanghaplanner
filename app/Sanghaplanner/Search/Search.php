@@ -33,4 +33,17 @@ class Search
     {
         return $repo->searchSangha($search);
     }
+
+    /**
+     * Returns a collection of retreats based on search criteria
+     *
+     * @param string $search
+     * @param RetreatRepositoryInterface $repo
+     *
+     * @return Illuminate\Support\Collection
+     */
+    public function retreats($search, RetreatRepositoryInterface $repo)
+    {
+        return $repo->searchRetreat($search);
+    }
 }
