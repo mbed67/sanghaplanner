@@ -158,3 +158,9 @@ Route::post('notifications', [
  * Retreats
  */
 Route::resource('sanghas.retreats', 'SanghaRetreatController');
+
+
+/**
+ * Tasks
+ */
+Route::resource('sanghas.retreats.tasks', 'TasksController');

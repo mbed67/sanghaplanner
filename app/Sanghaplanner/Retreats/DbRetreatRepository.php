@@ -3,6 +3,7 @@
 use Sanghaplanner\Repositories\DbRepository;
 use Sanghaplanner\Retreats\Retreat;
 use Carbon\Carbon;
+use DB;
 
 class DbRetreatRepository extends DbRepository implements RetreatRepositoryInterface
 {
@@ -50,5 +51,25 @@ class DbRetreatRepository extends DbRepository implements RetreatRepositoryInter
         ->get();
 
         return $retreats;
+    }
+
+    /**
+     * Returns the participants of a retreat
+     *
+     * @param $retreatId
+     * @return array
+     */
+    public function getParticipants($retreatId)
+    {
+        return DB::table('retreats')
+            ->join('tasks', function($join) use ($retreatId) {
+
+                    $join->on('retreats.id', '=', 'tasks.retreat_id')
+                         ->where('retreats.id', '=', $retreatId);
+            })
+            ->join('sangha_user', 'tasks.sangha_user_id', '=', 'sangha_user.id')
+            ->join('users', 'sangha_user.user_id', '=', 'users.id')
+            ->select('users.*')
+            ->get();
     }
 }

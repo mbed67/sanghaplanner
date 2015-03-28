@@ -144,6 +144,7 @@ return [
         'App\Providers\ConfigServiceProvider',
         'App\Providers\EventServiceProvider',
         'App\Providers\RouteServiceProvider',
+        'App\Providers\ComposerServiceProvider',
 
         /*
 		 * Extra Service Providers
@@ -155,6 +156,7 @@ return [
         'Sanghaplanner\Search\SearchServiceProvider',
         'Illuminate\Html\HtmlServiceProvider',
         'Intervention\Image\ImageServiceProvider',
+
 
     ],
 

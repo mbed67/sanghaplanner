@@ -5,15 +5,22 @@ use App\Http\Requests\CreateRetreatRequest;
 use App\Commands\CreateRetreatCommand;
 use Sanghaplanner\Facades\Search;
 use \Laracasts\Flash\Flash;
+use Sanghaplanner\Retreats\RetreatRepositoryInterface;
 
 class SanghaRetreatController extends Controller
 {
+    /**
+     * @var RetreatRepositoryInterface
+     */
+    protected $retreatRepository;
 
     /**
      * @param RetreatRepositoryInterface $retreatRepository
      */
-    public function __construct()
+    public function __construct(RetreatRepositoryInterface $retreatRepository)
     {
+        $this->retreatRepository = $retreatRepository;
+
         parent::__construct();
     }
 
@@ -48,7 +55,26 @@ class SanghaRetreatController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($sanghaId, $retreatId)
+    {
+        $retreat = $this->retreatRepository->findById($retreatId);
+
+        $participants = $this->retreatRepository->getParticipants($retreatId);
+
+        return view('retreats.show', [
+            'sanghaId' => $sanghaId,
+            'retreat' => $retreat,
+            'participants' => $participants
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
     {
         //
     }

@@ -32,4 +32,12 @@ interface RetreatRepositoryInterface
      * @return array
      */
     public function getRetreatsForSangha($sanghaUserIds);
+
+    /**
+     * Returns the participants of a retreat
+     *
+     * @param $retreatId
+     * @return array
+     */
+    public function getParticipants($retreatId);
 }

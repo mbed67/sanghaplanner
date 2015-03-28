@@ -61,4 +61,12 @@ interface UserRepositoryInterface
      * @param integer $sanghaId
      */
     public function toggleRole($userId, $sanghaId);
+
+    /**
+     * Return a list with retreats that the user is attending
+     *
+     * @param $userId
+     * @return array
+     */
+    public function retreatsAttendedByUser($userId);
 }

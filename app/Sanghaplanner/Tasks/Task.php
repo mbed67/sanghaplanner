@@ -32,12 +32,13 @@ class Task extends Model
 
     /**
      * @param $sangha_user_id
+     * @param $retreat_id
      * @param $description
      * @return Sanghaplanner\Tasks\Task
      */
-    public static function makeRetreatTask($sangha_user_id, $description)
+    public static function makeRetreatTask($sangha_user_id, $retreat_id, $description)
     {
-        $task = new static(compact('sangha_user_id', 'description'));
+        $task = new static(compact('sangha_user_id', 'retreat_id', 'description'));
 
         return $task;
     }

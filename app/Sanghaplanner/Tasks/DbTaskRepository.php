@@ -1,4 +1,4 @@
-<?php namespace Sanghaplanner\Roles;
+<?php namespace Sanghaplanner\Tasks;
 
 use Sanghaplanner\Repositories\DbRepository;
 use Sanghaplanner\Tasks\Task;

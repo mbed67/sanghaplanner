@@ -2,6 +2,7 @@
 
 use Sanghaplanner\Repositories\DbRepository;
 use Sanghaplanner\Notifications\Notification;
+use DB;
 
 class DbUserRepository extends DbRepository implements UserRepositoryInterface
 {
@@ -92,5 +93,27 @@ class DbUserRepository extends DbRepository implements UserRepositoryInterface
         } elseif ($user->roleForSangha($sanghaId) == 'lid') {
             $user->sanghas()->updateExistingPivot($sanghaId, ['role_id' => 1]);
         }
+    }
+
+    /**
+     * Return a list with retreats that the user is attending
+     *
+     * @param $userId
+     * @return array
+     */
+    public function retreatsAttendedByUser($userId)
+    {
+        $retreats =  DB::table('users')
+        ->join('sangha_user', function($join) use ($userId) {
+
+            $join->on('users.id', '=', 'sangha_user.user_id')
+            ->where('users.id', '=', $userId);
+        })
+        ->join('tasks', 'sangha_user.id', '=', 'tasks.sangha_user_id')
+        ->join('retreats', 'tasks.retreat_id', '=', 'retreats.id')
+        ->select('retreats.id')
+        ->get();
+
+        return (array) $retreats;
     }
 }
