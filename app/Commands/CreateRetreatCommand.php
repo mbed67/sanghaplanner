@@ -75,7 +75,7 @@ class CreateRetreatCommand extends Command implements SelfHandling
         $sanghaUserId = $sanghaRepository->findPivotId($sangha, $userId);
         $taskDescription = 'attending';
 
-        $task = Task::makeRetreatTask($sanghaUserId, $taskDescription);
+        $task = Task::makeRetreatTask($sanghaUserId, $retreat->id, $taskDescription);
 
         $retreat->tasks()->save($task);
 
