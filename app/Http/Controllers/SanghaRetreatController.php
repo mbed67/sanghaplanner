@@ -46,7 +46,7 @@ class SanghaRetreatController extends Controller
 
         Flash::success('Het nieuwe evenement is aangemaakt.');
 
-        return redirect('/sanghas/');
+        return redirect('/sanghas/' . $request->sanghaId);
     }
 
     /**
