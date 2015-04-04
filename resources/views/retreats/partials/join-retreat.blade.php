@@ -1,6 +1,6 @@
 @if (Auth::user())
     @if (! in_array($retreat->id, $myRetreats))
-        {!! Form::open(['route' => ['sanghas.retreats.tasks.store']]) !!}
+        {!! Form::open(['route' => ['sanghas.retreats.tasks.store', $sangha->id, $retreat->id]]) !!}
             {!! Form::hidden('retreatId', $retreat->id) !!}
             {!! Form::hidden('userId', Auth::id()) !!}
             {!! Form::hidden('sanghaId', $sangha->id) !!}
