@@ -11,6 +11,11 @@ class SanghaRepositoryTest extends \Codeception\TestCase\Test
      */
     protected $tester;
 
+    /**
+     * @var Sanghaplanner\Sanghas\DbSanghaRepository
+     */
+    protected $repo;
+
     protected function _before()
     {
         $sangha = new Sangha();
@@ -102,4 +107,24 @@ class SanghaRepositoryTest extends \Codeception\TestCase\Test
         $this->tester->dontSeeRecord('sangha_user', ['user_id' => $user->id]);
     }
 
+    /** @tests */
+    public function it_finds_the_sangha_user_ids_for_a_sangha()
+    {
+        $sangha = $this->tester->haveASanghaWithTwoAdmins();
+
+        $results = $this->repo->findSanghaUserIdsForSangha($sangha->id);
+
+        $this->assertCount(2, $results);
+    }
+
+    /** @tests */
+    public function it_finds_the_id_of_the_pivot_record_for_a_user_and_a_sangha()
+    {
+        $user = $this->tester->haveAUserWithTwoSanghas();
+        $sangha = $user->sanghas()->first();
+
+        $result = $this->repo->findPivotId($sangha, $user->id);
+
+        $this->assertTrue(gettype($result) === 'integer');
+    }
 }

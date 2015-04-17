@@ -127,7 +127,7 @@ class DbSanghaRepository extends DbRepository implements SanghaRepositoryInterfa
      * Returns the id on the pivot table for the user with this sangha
      *
      * @param $id
-     * @return string
+     * @return integer
      */
     public function findPivotId($sangha, $userId)
     {

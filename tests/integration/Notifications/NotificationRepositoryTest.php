@@ -11,6 +11,11 @@ class NotificationRepositoryTest extends \Codeception\TestCase\Test
      */
     protected $tester;
 
+    /**
+     * @var Sanghaplanner\Notifications\DbNotificationRepository
+     */
+    protected $repo;
+
     protected function _before()
     {
         $notification = new Notification();

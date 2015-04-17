@@ -11,6 +11,11 @@ class RoleRepositoryTest extends \Codeception\TestCase\Test
      */
     protected $tester;
 
+    /**
+     * @var Sanghaplanner\Roles\DbRoleRepository
+     */
+    protected $repo;
+
     protected function _before()
     {
         $role = new Role();

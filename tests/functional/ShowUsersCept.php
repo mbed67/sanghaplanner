@@ -10,5 +10,5 @@ $I->haveAnAccount(['firstname' => 'Bar']);
 $I->signIn();
 
 $I->amOnPage('/users');
-$I->see('Foo');
-$I->see('Bar');
+$I->see('Foo', '.user-block-username');
+$I->see('Bar', '.user-block-username');

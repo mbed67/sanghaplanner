@@ -4,7 +4,7 @@ $I->am('a guest');
 $I->wantTo('sign up for a Sanghaplanner account');
 
 $I->amOnPage('/');
-$I->click('Aanmelden');
+$I->click('Aanmelden', '.btn');
 $I->seeCurrentUrlEquals('/auth/register');
 
 $I->fillField('Email:', 'john@example.com');
@@ -15,13 +15,13 @@ $I->fillField('Achternaam:', 'Doe');
 $I->fillField('Adres:', 'Spoorweg 1');
 $I->fillField('Postcode:', '1234 AA');
 $I->fillField('Woonplaats:', 'Amsterdam');
-$I->click('Registreer');
+$I->click('Registreer', '.btn');
 
 $I->seeRecord('users', array('firstname' => 'John'));
 
 
 $I->seeCurrentUrlEquals('/home');
-$I->see('Je bent ingelogd!');
+$I->see('Je bent ingelogd!', '.panel-body');
 
 $I->seeRecord('users', [
     'email' => 'john@example.com'

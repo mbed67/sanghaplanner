@@ -44,3 +44,19 @@ $factory('Sanghaplanner\Notifications\Notification', [
     'created_at' => $faker->dateTime($max = 'now'),
     'updated_at' => $faker->dateTime($max = 'now')
     ]);
+
+$factory('Sanghaplanner\Tasks\Task', [
+    'sangha_user_id' => $faker->randomDigitNotNull,
+    'retreat_id' => 'factory:Sanghaplanner\Retreats\Retreat',
+    'description' => $faker->word,
+    'created_at' => $faker->dateTime($max = 'now'),
+    'updated_at' => $faker->dateTime($max = 'now')
+]);
+
+$factory('Sanghaplanner\Retreats\Retreat', [
+    'description' => $faker->word,
+    'retreat_start' => $faker->dateTimeBetween($startDate = '+1 days', $endDate = '+7 days'),
+    'retreat_end' => $faker->dateTimeBetween($startDate = '+8 days', $endDate = '+15 days'),
+    'created_at' => $faker->dateTime($max = 'now'),
+    'updated_at' => $faker->dateTime($max = 'now')
+]);

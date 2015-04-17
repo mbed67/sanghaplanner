@@ -6,7 +6,7 @@ $I->wantTo('log out');
 
 $I->signIn();
 
-$I->click('Uitloggen');
+$I->click('Uitloggen', 'a');
 
 $I->dontSee('foo@example.com');
 $I->amOnPage('/');

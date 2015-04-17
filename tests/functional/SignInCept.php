@@ -9,5 +9,5 @@ $I->seeRecord('users', array('firstname' => 'foo'));
 
 $I->seeCurrentUrlEquals('/home');
 
-$I->see('foo@example.com');
+$I->see('foo@example.com', '.dropdown');
 $I->assertTrue(Auth::check());

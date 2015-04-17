@@ -11,6 +11,11 @@ class UserRepositoryTest extends \Codeception\TestCase\Test
      */
     protected $tester;
 
+    /**
+     * @var Sanghaplanner\Users\DbUserRepository
+     */
+    protected $repo;
+
     protected function _before()
     {
         $user = new User();
@@ -95,5 +100,15 @@ class UserRepositoryTest extends \Codeception\TestCase\Test
 
         $this->tester->seeRecord('sangha_user', ['sangha_id' => $sangha->id, 'role_id' => 1]);
         $this->tester->dontSeeRecord('sangha_user', ['sangha_id' => $sangha->id, 'role_id' => 2]);
+    }
+
+    /** @tests */
+    public function it_returns_a_list_with_retreats_that_the_user_is_attending()
+    {
+        $user = $this->tester->haveAUserWithTwoRetreats();
+
+        $results = $this->repo->retreatsAttendedByUser($user->id);
+
+        $this->assertCount(2, $results);
     }
 }

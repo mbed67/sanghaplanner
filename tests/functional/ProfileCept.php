@@ -4,22 +4,22 @@ $I = new FunctionalTester($scenario);
 $I->am('Sanghaplanner member');
 $I->wantTo('edit my profile');
 
-$I->signInAsRole('lid');
+$I->signInAsRole('lid', 'myrole@example.com');
 
-$I->click('Profiel');
+$I->click('Profiel', 'a');
 
-$I->see('myrole@example.com');
-$I->see('Mijn sangha');
-$I->click('Wijzig gegevens');
+$I->see('myrole@example.com', 'td');
+$I->see('Mijn sangha', 'a');
+$I->click('Wijzig gegevens', '.btn');
 $I->fillField('firstname', 'New First Name');
-$I->click('Wijzig');
-$I->see('De gegevens zijn gewijzigd');
-$I->see('New First Name');
+$I->click('Wijzig', '.btn');
+$I->see('De gegevens zijn gewijzigd', '.alert');
+$I->see('New First Name', 'h1');
 
 $I->haveAnAccount(['firstname' => 'Other user']);
 
-$I->click('Ledenlijst');
-$I->click('Other user');
-$I->see('Email');
-$I->see('Sangha');
+$I->click('Ledenlijst', 'a');
+$I->click('Other user', '.user-block-username');
+$I->see('Email', 'td');
+$I->see('Sangha', 'th');
 $I->dontSee('Wijzig gegevens');

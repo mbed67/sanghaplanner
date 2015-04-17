@@ -20,7 +20,7 @@ class FunctionalHelper extends \Codeception\Module
         $phone = '020-1234567';
         $gsm = '06-12345678';
 
-        $this->haveAnAccount(compact(
+        $user = $this->haveAnAccount(compact(
             'email',
             'password',
             'firstname',
@@ -39,20 +39,42 @@ class FunctionalHelper extends \Codeception\Module
         $I->fillField('email', $email);
         $I->fillField('password', 'foofoofoo');
         $I->click('Inloggen');
+
+        return $user;
     }
 
-    public function createAnAdministratorRole()
+    public function haveASanghaWithARetreat()
     {
-        TestDummy::create('Sanghaplanner\Roles\Role', [
-            'rolename' => 'administrator'
-        ]);
+        $user = $this->signInAsRole('administrator', 'myrole@example.com');
+        $I = $this->getModule('Laravel5');
+        $I->click('Sangha\'s');
+        $I->click('Mijn sangha');
+        $I->click('Evenementen');
+        $I->click('Nieuw evenement');
+        $I->fillField('Omschrijving:', 'Testevenement');
+        $I->fillField('Begin:', '30-03-2030 21:25');
+        $I->fillField('Einde:', '30-03-2030 22:25');
+        $I->click('Maak evenement');
+        $I->click('myrole@example.com');
+        $I->click('Uitloggen');
+
+        $sanghaId = $user->sanghas()->first()->id;
+
+        return $sanghaId;
+
     }
 
-    public function createAMemberRole()
+    public function signInAsRole($role, $email)
     {
-        TestDummy::create('Sanghaplanner\Roles\Role', [
-            'rolename' => 'lid'
-        ]);
+        $user = $this->haveASanghaWithRole($role);
+        $I = $this->getModule('Laravel5');
+
+        $I->amOnPage('/auth/login');
+        $I->fillField('email', $email);
+        $I->fillField('password', 'rolerole');
+        $I->click('Inloggen');
+
+        return $user;
     }
 
     public function haveASanghaWithRole($role)
@@ -76,31 +98,34 @@ class FunctionalHelper extends \Codeception\Module
     }
 
 
+    public function createAnAdministratorRole()
+    {
+        TestDummy::create('Sanghaplanner\Roles\Role', [
+            'rolename' => 'administrator'
+        ]);
+    }
+
+    public function createAMemberRole()
+    {
+        $role = TestDummy::create('Sanghaplanner\Roles\Role', [
+            'rolename' => 'lid'
+        ]);
+
+        return $role;
+    }
+
     public function haveAnAccount($overrides = [])
     {
         return $this->have('Sanghaplanner\Users\User', $overrides);
     }
 
-    public function have($model, $overrides = [])
-    {
-        return TestDummy::create($model, $overrides);
-    }
-
-    public function signInAsRole($role)
-    {
-        $user = $this->haveASanghaWithRole($role);
-        $I = $this->getModule('Laravel5');
-
-        $I->amOnPage('/auth/login');
-        $I->fillField('email', 'myrole@example.com');
-        $I->fillField('password', 'rolerole');
-        $I->click('Inloggen');
-
-        return $user;
-    }
-
     public function haveANotification($user, $overrides = [])
     {
         return $this->have('Sanghaplanner\Notifications\Notification', $overrides);
+    }
+
+    public function have($model, $overrides = [])
+    {
+        return TestDummy::create($model, $overrides);
     }
 }

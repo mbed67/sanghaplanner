@@ -12,19 +12,19 @@ $I->fillField('Sanghanaam:', 'Testsangha');
 $I->fillField('Adres:', 'Testadres');
 $I->fillField('Postcode:', '1111 VV');
 $I->fillField('Plaats:', 'Testplaats');
-$I->click('Maak sangha');
+$I->click('Maak sangha', '.btn');
 
 $I->seeCurrentUrlEquals('/sanghas');
-$I->see('Testsangha');
-$I->click('Testsangha');
-$I->see('Testsangha');
-$I->see('administrator');
+$I->see('Testsangha', 'a');
+$I->click('Testsangha', 'a');
+$I->see('Testsangha', 'h1');
+$I->see('administrator', '.col-md-1');
 
-$I->click('Wijzig gegevens');
+$I->click('Wijzig gegevens', '.btn');
 
-$I->see('Wijzig sanghagegevens');
+$I->see('Wijzig sanghagegevens', 'h1');
 $I->see('Testsangha');
 $I->fillField('Sanghanaam:', 'Gewijzigde sangha');
-$I->click('Wijzig sangha');
-$I->see('De gegevens zijn gewijzigd');
-$I->see('Gewijzigde sangha');
+$I->click('Wijzig sangha', '.btn');
+$I->see('De gegevens zijn gewijzigd', '.alert');
+$I->see('Gewijzigde sangha', 'h1');
