@@ -1,5 +1,16 @@
 suites:
-    main:
+    main_suite:
         namespace: App
         psr4_prefix: App
         src_path: app
+        spec_path: tests/unit
+        spec_prefix: spec
+        
+    sanghaplanner_suite:
+        namespace: Sanghaplanner
+        psr4_prefix: Sanghaplanner
+        src_path: app/Sanghaplanner
+        spec_path: tests/unit/Sanghaplanner
+        spec_prefix: spec
+        
+        

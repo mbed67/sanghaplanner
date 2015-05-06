@@ -20,19 +20,6 @@ Route::get('home', 'HomeController@index');
 
 
 /**
- * Registration!
- */
-Route::get('register', [
-    'as' => 'register_path',
-    'uses' => 'RegistrationController@create'
-]);
-
-Route::post('register', [
-    'as' => 'register_path',
-    'uses' => 'RegistrationController@store'
-]);
-
-/**
  * Users
  */
 Route::get('users', [
