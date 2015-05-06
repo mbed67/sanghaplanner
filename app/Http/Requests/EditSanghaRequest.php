@@ -2,7 +2,6 @@
 
 use App\Http\Requests\Request;
 use Auth;
-use Sanghaplanner\Sanghas\SanghaRepositoryInterface;
 
 class EditSanghaRequest extends Request
 {
@@ -26,12 +25,10 @@ class EditSanghaRequest extends Request
      *
      * @return array
      */
-    public function rules(SanghaRepositoryInterface $repository)
+    public function rules()
     {
-        $sangha = $repository->findById($this->id);
-
         return [
-        'sanghaname' => 'required|unique:sanghas,sanghaname,' . $sangha->id,
+        'sanghaname' => 'required|unique:sanghas,sanghaname,' . $this->id,
         'address' => 'required',
         'zipcode' => 'required',
         'place' => 'required',

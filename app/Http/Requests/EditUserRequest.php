@@ -1,7 +1,6 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use Sanghaplanner\Users\UserRepositoryInterface;
 use Auth;
 
 class EditUserRequest extends Request
@@ -27,12 +26,10 @@ class EditUserRequest extends Request
      * @param Sanghaplanner\Users\UserRepositoryInterface $repository
      * @return array
      */
-    public function rules(UserRepositoryInterface $repository)
+    public function rules()
     {
-        $user = $repository->findById($this->id);
-
         return [
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'email' => 'required|email|max:255|unique:users,email,' . $this->id,
             'firstname' => 'required',
             'lastname' => 'required',
             'address' => 'required',
