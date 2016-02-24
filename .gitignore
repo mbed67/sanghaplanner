@@ -13,3 +13,6 @@ codeception.yml
 /.settings
 /node_modules/
 /public/images
+.idea
+/public/css
+/public/js/main.js
