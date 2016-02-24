@@ -57,7 +57,7 @@ class Retreat extends Model
      * @param $description
      * @param $retreat_start
      * @param $retreat_end
-     * @return Sanghaplanner\Retreats\Retreat
+     * @return static
      */
     public static function createRetreat($description, $retreat_start, $retreat_end)
     {

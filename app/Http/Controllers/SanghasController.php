@@ -120,6 +120,8 @@ class SanghasController extends Controller
         $retreats = $this->getRetreats($id);
 
         return view('sanghas.show', [
+            'isAdminOfThisSangha' => Auth::user()->roleForSangha($sangha->id) == 'administrator',
+            'isMemberOfThisSangha' => Auth::user()->sanghas->find($sangha->id) ? true : false,
             'sangha' => $sangha,
             'notifications' => $notifications,
             'admins' => $admins,
@@ -186,9 +188,7 @@ class SanghasController extends Controller
     private function getAdmins($sanghaId)
     {
         $adminRole = $this->roleRepository->getRoleByName('administrator');
-        $admins = $this->sanghaRepository->findUsersByRoleForSangha($sanghaId, $adminRole->id);
-
-        return $admins;
+        return $this->sanghaRepository->findUsersByRoleForSangha($sanghaId, $adminRole->id);
     }
 
     /**
@@ -200,8 +200,7 @@ class SanghasController extends Controller
     private function getRetreats($sanghaId)
     {
         $sanghaUserIds = $this->sanghaRepository->findSanghaUserIdsForSangha($sanghaId);
-        $retreats = $this->retreatRepository->getRetreatsForSangha($sanghaUserIds);
+        return $this->retreatRepository->getRetreatsForSangha($sanghaUserIds);
 
-        return $retreats;
     }
 }

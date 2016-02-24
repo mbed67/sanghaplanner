@@ -20,5 +20,6 @@
 	   $('#flash-overlay-modal').modal();
     </script>
     <script src="/js/sanghaTabs.js"></script>
+    <script src="/js/main.js"></script>
 </body>
 </html>

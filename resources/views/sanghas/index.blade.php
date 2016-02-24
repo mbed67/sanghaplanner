@@ -17,7 +17,7 @@
                  <tr>
                     <td>{!!link_to("/sanghas/{$sangha->id}", $sangha->sanghaname) !!}</td>
                     <td>@include('sanghas.partials.join-sangha')</td>
-                </tr>
+                 </tr>
                 @endforeach
               </table>
             </div>
