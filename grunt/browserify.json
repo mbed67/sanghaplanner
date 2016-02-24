@@ -1,0 +1,12 @@
+{
+  "develop": {
+    "files": {
+      "public/js/main.js": "resources/assets/js/main.js"
+    },
+    "options": {
+      "transform": [
+        "babelify"
+      ]
+    }
+  }
+}

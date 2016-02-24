@@ -1,0 +1,10 @@
+{
+  "options": {
+    "sourceMap": true
+  },
+  "dist": {
+    "files": {
+      "public/css/main.css": "resources/assets/sass/main.scss"
+    }
+  }
+}

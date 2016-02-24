@@ -1,8 +1,36 @@
 {
   "devDependencies": {
-    "laravel-elixir": "*",
-    "gulp": "^3.8.10",
-    "gulp-autoprefixer": "^2.0.0",
-    "gulp-sass": "^1.2.4"
+    "babel": "^5.8.23",
+    "babelify": "^6.3.0",
+    "es6-shim": "^0.33.9",
+    "eslint-plugin-react": "^3.7.1",
+    "grunt": "^0.4.5",
+    "grunt-autoprefixer": "~3.0.0",
+    "grunt-babel": "^5.0.3",
+    "grunt-browserify": "^4.0.1",
+    "grunt-cli": "0.1.x",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-compass": "1.0.x",
+    "grunt-contrib-copy": "~0.8.0",
+    "grunt-contrib-uglify": "~0.9.1",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-eslint": "^17.3.1",
+    "grunt-mochify": "^0.3.0",
+    "grunt-sass": "1.0.x",
+    "grunt-scss-lint": "*",
+    "load-grunt-configs": "^0.4.3",
+    "node-sass": "2.*"
+  },
+  "dependencies": {
+    "bootstrap": "https://github.com/twbs/bootstrap/archive/v4.0.0-alpha.tar.gz",
+    "classnames": "^2.1.5",
+    "jquery": "~2.1.4",
+    "parsleyjs": "^2.2.0-rc1",
+    "react": "^0.14.0",
+    "react-bootstrap": "^0.27.2",
+    "react-dom": "^0.14.0",
+    "react-redux": "^4.0.0",
+    "redux": "^3.0.3",
+    "redux-thunk": "^1.0.0"
   }
 }
