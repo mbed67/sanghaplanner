@@ -11,6 +11,8 @@
 @include(
     'sanghas.partials.js',
     [
+        'isAdminOfThisSangha' => $isAdminOfThisSangha,
+        'isMemberOfThisSangha' => $isMemberOfThisSangha,
         'sangha' => $sangha,
         'notifications' => $notifications,
         'admins' => $admins,

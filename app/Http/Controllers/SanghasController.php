@@ -120,8 +120,8 @@ class SanghasController extends Controller
         $retreats = $this->getRetreats($id);
 
         return view('sanghas.show', [
-            'isAdminOfThisSangha' => Auth::user()->roleForSangha($sangha->id) == 'administrator',
-            'isMemberOfThisSangha' => Auth::user()->sanghas->find($sangha->id) ? true : false,
+            'isAdminOfThisSangha' => Auth::user()->roleForSangha($sangha->id) == 'administrator' ? "true" : "false",
+            'isMemberOfThisSangha' => Auth::user()->sanghas->find($sangha->id) ? "true" : "false",
             'sangha' => $sangha,
             'notifications' => $notifications,
             'admins' => $admins,

@@ -16,6 +16,10 @@ export default class General extends Component {
       adminComponents.push(<Admin key={ admin.id } admin={ admin }/>)
     });
 
+    if (adminComponents.length === 0) {
+      adminComponents = <tr><td>Contactpersonen</td><td>Deze sangha heeft geen contactpersonen</td></tr>;
+    }
+
     return (
         <div role="tabpanel" className="tab-pane active" id="algemeen">
           <div className="row">
@@ -37,7 +41,7 @@ export default class General extends Component {
                 </table>
               </div>
               <Conditional value={ isAdminOfThisSangha }>
-                <div className="form-group" showIfStrictlyEquals={ 1 }>
+                <div className="form-group" showIfTrue>
                   route naar wijzig sangha
                 </div>
               </Conditional>
@@ -54,5 +58,4 @@ export default class General extends Component {
     )
   }
 }
-
 
