@@ -2,6 +2,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
     // specifies where the config directory is
     var options = {
@@ -19,7 +20,8 @@ module.exports = function(grunt) {
         [
             'sass',
             'browserify',
-            'uglify'
+            'uglify',
+            'copy'
         ]
     );
 

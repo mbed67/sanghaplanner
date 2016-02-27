@@ -14,5 +14,5 @@ codeception.yml
 /node_modules/
 /public/images
 .idea
-/public/css
-/public/js/main.js
+/public/css/*
+/public/js/*

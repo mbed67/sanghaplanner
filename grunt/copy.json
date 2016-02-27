@@ -1,0 +1,9 @@
+{
+   "main": {
+    "files": [
+      {"src": ["node_modules/bootstrap/dist/js/bootstrap.min.js"], "dest": "public/js/", "expand": true, "flatten": true},
+      {"src": ["node_modules/jquery/dist/jquery.min.js"], "dest": "public/js/", "expand": true, "flatten": true},
+      {"src": ["node_modules/bootstrap/dist/css/bootstrap.min.css"], "dest": "public/css/", "expand": true, "flatten": true}
+    ]
+  }
+}
