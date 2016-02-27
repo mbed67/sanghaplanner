@@ -1,6 +1,8 @@
 {
   "target": {
     "files": {
+      "public/js/datetimepicker_css.js": ["resources/assets/js/datetimepicker_css.js"],
+      "public/js/sanghaTabs.js": ["resources/assets/js/sanghaTabs.js"],
       "public/js/main.js": ["public/js/main.js"]
     }
   }
