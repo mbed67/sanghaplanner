@@ -5,7 +5,7 @@ import Conditional from 'react-conditional-component'
 
 export default class General extends Component {
   render() {
-    const { isAdminOfThisSangha, sangha, admins } = this.props;
+    const { isAdminOfThisSangha, sangha, admins, route } = this.props;
 
     const sanghaname = sangha.sanghaname.replace(/ /g, "_");
     const pathToImage = "/images/" + sanghaname + "/" + sangha.filename;
@@ -42,7 +42,7 @@ export default class General extends Component {
               </div>
               <Conditional value={ isAdminOfThisSangha }>
                 <div className="form-group" showIfTrue>
-                  route naar wijzig sangha
+                  <a href={ route } className="btn btn-primary">Wijzig sangha</a>
                 </div>
               </Conditional>
             </div>

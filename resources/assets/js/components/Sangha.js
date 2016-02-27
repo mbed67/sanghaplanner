@@ -6,7 +6,7 @@ import Members from './Members';
 
 export default class Sangha extends Component {
   render() {
-    const { isAdminOfThisSangha, isMemberOfThisSangha, sangha, notifications, admins, retreats } = this.props;
+    const { isAdminOfThisSangha, isMemberOfThisSangha, sangha, notifications, admins, retreats, routes } = this.props;
 
     return (
       <div id='Sangha'>
@@ -24,7 +24,11 @@ export default class Sangha extends Component {
               </div>
           </div>
           <div className="tab-content">
-              <General isAdminOfThisSangha = { isAdminOfThisSangha } sangha = { sangha } admins = { admins } />
+              <General isAdminOfThisSangha = { isAdminOfThisSangha }
+                       sangha = { sangha }
+                       admins = { admins }
+                       route = { routes.editSanghaRoute }
+              />
               <Events isAdminOfThisSangha = { isAdminOfThisSangha }
                       isMemberOfThisSangha = { isMemberOfThisSangha }
                       sangha = { sangha }

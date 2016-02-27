@@ -20,7 +20,8 @@ const mapStateToProps = (state) => {
         sangha: state.sangha,
         notifications: state.notifications,
         admins: state.admins,
-        retreats: state.retreats
+        retreats: state.retreats,
+        routes: state.routes
     }
 };
 
