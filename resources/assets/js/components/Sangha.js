@@ -29,11 +29,11 @@ export default class Sangha extends Component {
                        admins = { admins }
                        route = { routes.editSanghaRoute }
               />
-              <Events isAdminOfThisSangha = { isAdminOfThisSangha }
+              <Members isAdminOfThisSangha = { isAdminOfThisSangha }
                       isMemberOfThisSangha = { isMemberOfThisSangha }
                       sangha = { sangha }
                       notifications = { notifications } />
-              <Members sangha = { sangha } retreats = { retreats } />
+              <Events sangha = { sangha } retreats = { retreats } />
           </div>
       </div>
     )
