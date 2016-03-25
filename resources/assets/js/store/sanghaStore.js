@@ -1,11 +1,14 @@
+import 'babel-polyfill'
 import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 import rootReducer from '../reducers/rootReducer';
+import { helloSaga } from '../sagas/helloSaga';
 
-const createStoreWithMiddleware = applyMiddleware(
-    thunk
-)(createStore);
+const store = createStore(
+    rootReducer,
+    applyMiddleware(createSagaMiddleware(helloSaga))
+);
 
-export default function sanghaStore(initialState) {
-    return createStoreWithMiddleware(rootReducer, initialState);
+export default function sanghaStore() {
+    return store;
 };
