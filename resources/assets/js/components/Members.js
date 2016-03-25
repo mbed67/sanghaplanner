@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-
+import Conditional from 'react-conditional-component';
 import Member from './Member';
+import Notification from './Notification';
 
 export default class Members extends Component {
   render() {
@@ -10,6 +11,12 @@ export default class Members extends Component {
 
       sangha.users.forEach(function(member) {
           memberComponents.push(<Member key={ member.id } member={ member }/>)
+      });
+
+      let notificationComponents = [];
+
+      notifications.forEach(function(notification){
+          notificationComponents.push(<Notification key={ notification.id } notification = { notification }/>)
       });
 
       return (
@@ -30,7 +37,12 @@ export default class Members extends Component {
                   <div className="col-md-3">
                       <Conditional value={ isAdminOfThisSangha }>
                           <div showIfTrue>
-                              @include('notifications.partials.membershipRequests', ['notifications' => $notifications])
+                              <h4>Lidmaatschapsverzoeken</h4>
+                              <Conditional value={ notificationComponents.length }>
+                                  <div showIfGte={ 1 }>
+                                      { notificationComponents }
+                                  </div>
+                              </Conditional>
                           </div>
                       </Conditional>
                   </div>
