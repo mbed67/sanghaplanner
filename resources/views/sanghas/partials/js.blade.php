@@ -3,7 +3,7 @@
         isAdminOfThisSangha: {{ $isAdminOfThisSangha }},
         isMemberOfThisSangha: {{ $isMemberOfThisSangha }},
         sangha: {!! $sangha !!},
-        notifications: {!! $notifications !!},
+        notifications: {!! json_encode($notifications) !!},
         admins: {!! $admins !!},
         retreats: {!! $retreats !!},
         routes: {

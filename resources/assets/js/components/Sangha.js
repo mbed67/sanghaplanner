@@ -6,7 +6,16 @@ import Members from './Members';
 
 export default class Sangha extends Component {
   render() {
-    const { isAdminOfThisSangha, isMemberOfThisSangha, sangha, notifications, admins, retreats, routes } = this.props;
+    const {
+        approveMembershipRequest,
+        isAdminOfThisSangha,
+        isMemberOfThisSangha,
+        sangha,
+        notifications,
+        admins,
+        retreats,
+        routes
+        } = this.props;
 
     return (
       <div id='Sangha'>
@@ -29,7 +38,8 @@ export default class Sangha extends Component {
                        admins = { admins }
                        route = { routes.editSanghaRoute }
               />
-              <Members isAdminOfThisSangha = { isAdminOfThisSangha }
+              <Members approveMembershipRequest = { approveMembershipRequest}
+                      isAdminOfThisSangha = { isAdminOfThisSangha }
                       isMemberOfThisSangha = { isMemberOfThisSangha }
                       sangha = { sangha }
                       notifications = { notifications } />

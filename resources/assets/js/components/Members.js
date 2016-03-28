@@ -5,7 +5,7 @@ import Notification from './Notification';
 
 export default class Members extends Component {
   render() {
-      const { isAdminOfThisSangha, isMemberOfThisSangha, sangha, notifications } = this.props;
+      const { approveMembershipRequest, isAdminOfThisSangha, isMemberOfThisSangha, sangha, notifications } = this.props;
 
       let memberComponents = [];
 
@@ -16,7 +16,9 @@ export default class Members extends Component {
       let notificationComponents = [];
 
       notifications.forEach(function(notification){
-          notificationComponents.push(<Notification key={ notification.id } notification = { notification }/>)
+          notificationComponents.push(<Notification key={ notification.id }
+                                                    notification = { notification }
+                                                    approveMembershipRequest = { approveMembershipRequest }/>)
       });
 
       return (

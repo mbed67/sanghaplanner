@@ -43,8 +43,7 @@ class MembershipsController extends Controller
      */
     public function store(ApproveOrRejectMemberRequest $request)
     {
-
-        if (Request::exists('approve_button')) {
+        if (Request::exists('approved')) {
             $this->dispatchFrom(ApproveMemberCommand::class, $request);
 
             return Redirect::back();

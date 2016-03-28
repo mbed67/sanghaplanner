@@ -1,5 +1,6 @@
 <?php namespace Sanghaplanner\Notifications;
 
+use Illuminate\Support\Facades\Session;
 use Sanghaplanner\Repositories\DbRepository;
 use Sanghaplanner\Sanghas\Sangha;
 
@@ -52,12 +53,30 @@ class DbNotificationRepository extends DbRepository implements NotificationRepos
      */
     public function showMembershipRequestsForSangha(Sangha $sangha, $id)
     {
-        return $this->model
-            ->where('Object_id', '=', $sangha->id)
+        $models = $this->model
+            ->where('object_id', '=', $sangha->id)
             ->where('type', '=', 'MembershipRequest')
             ->where('user_id', '=', $id)
             ->where('is_read', '=', '0')
             ->get();
+
+        $arrayOfModels = [];
+
+        foreach($models as $model) {
+            $arrayOfModels[] = [
+                'id' => $model->id,
+                'sanghaId' => $model->object_id,
+                'senderId' => $model->sender_id,
+                'firstName' => $model->sender->firstname,
+                'middleName' => $model->sender->middlename,
+                'lastName' => $model->sender->lastname,
+                'avatar' => $model->sender->present()->gravatar(30),
+                'profilePath' => route('profile_path', $model->sender->id),
+                'token' => Session::token()
+            ];
+        }
+
+        return $arrayOfModels;
     }
 
     /**

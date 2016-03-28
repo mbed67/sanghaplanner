@@ -152,6 +152,7 @@ class Notification extends Eloquent
 
     /**
      * @return mixed
+     * @throws \Exception
      */
     public function getObject()
     {

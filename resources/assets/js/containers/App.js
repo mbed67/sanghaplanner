@@ -1,13 +1,33 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import Sangha from './../components/Sangha';
+import * as sanghaActions from '../actions/sangha';
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+
+        this.actions = bindActionCreators(
+            Object.assign({}, sanghaActions),
+            this.props.dispatch
+        );
+    }
+
+    approveMembershipRequest(userId, sanghaId, token) {
+        this.actions.approveMembershipRequest(
+            userId,
+            sanghaId,
+            token
+        );
+    }
+
     render() {
       return (
         <div id='App'>
-          <Sangha { ...this.props}/>
+          <Sangha approveMembershipRequest={ this.approveMembershipRequest.bind(this) }
+                  {...this.props}/>
         </div>
       )
     }
