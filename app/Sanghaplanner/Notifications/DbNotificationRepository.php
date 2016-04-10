@@ -71,8 +71,7 @@ class DbNotificationRepository extends DbRepository implements NotificationRepos
                 'middleName' => $model->sender->middlename,
                 'lastName' => $model->sender->lastname,
                 'avatar' => $model->sender->present()->gravatar(30),
-                'profilePath' => route('profile_path', $model->sender->id),
-                'token' => Session::token()
+                'profilePath' => route('profile_path', $model->sender->id)
             ];
         }
 

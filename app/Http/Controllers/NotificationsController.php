@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use Sanghaplanner\Notifications\NotificationRepositoryInterface;
+use Sanghaplanner\Sanghas\SanghaRepositoryInterface;
 use Sanghaplanner\Users\UserRepositoryInterface;
 use App\Commands\JoinSanghaCommand;
 use App\Http\Requests\JoinSanghaRequest;
@@ -21,14 +22,23 @@ class NotificationsController extends Controller
     private $userRepository;
 
     /**
-     * @param UserRepository $userRepository
+     * @var SanghaRepositoryInterface
+     */
+    private $sanghaRepository;
+
+    /**
+     * @param NotificationRepositoryInterface $notificationRepository
+     * @param UserRepository|UserRepositoryInterface $userRepository
+     * @param SanghaRepositoryInterface $sanghaRepository
      */
     public function __construct(
         NotificationRepositoryInterface $notificationRepository,
-        UserRepositoryInterface $userRepository
+        UserRepositoryInterface $userRepository,
+        SanghaRepositoryInterface $sanghaRepository
     ) {
         $this->notificationRepository = $notificationRepository;
         $this->userRepository = $userRepository;
+        $this->sanghaRepository = $sanghaRepository;
     }
 
     /**
@@ -41,6 +51,20 @@ class NotificationsController extends Controller
         $user = $this->userRepository->findUserWithAllNotifications(Auth::user()->id);
 
         return view('notifications.index', ['user' => $user]);
+    }
+
+    /**
+     * Display the notifications for a specified sangha.
+     *
+     * @param  int $sanghaId
+     * @return Response
+     */
+    public function fetchNotificationsForSangha($sanghaId)
+    {
+        $sangha = $this->sanghaRepository->findById($sanghaId);
+        $notifications = $this->notificationRepository->showMembershipRequestsForSangha($sangha, 31);
+
+        return response()->json($notifications);
     }
 
     /**

@@ -141,6 +141,12 @@ Route::post('notifications', [
         'uses' => 'NotificationsController@store'
         ]);
 
+Route::get('notifications/{sanghaId}', [
+    'as' => 'fetch_notifications_for_sangha_path',
+    'uses' => 'NotificationsController@fetchNotificationsForSangha'
+]);
+
+
 /**
  * Retreats
  */

@@ -2,21 +2,30 @@ import React, {Component} from 'react';
 
 
 export default class Notification extends Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.approve = this.approve.bind(this);
-  }
+        this.approve = this.approve.bind(this);
+        this.reject = this.reject.bind(this);
+      }
 
-  approve() {
-    this.props.approveMembershipRequest(
-        this.props.notification.senderId,
-        this.props.notification.sanghaId,
-        this.props.notification.token
-    );
-  }
+    approve() {
+        this.props.approveMembershipRequest(
+            this.props.notification.id,
+            this.props.notification.senderId,
+            this.props.notification.sanghaId
+        );
+      }
 
-  render() {
+    reject() {
+        this.props.rejectMembershipRequest(
+            this.props.notification.id,
+            this.props.notification.senderId,
+            this.props.notification.sanghaId
+        );
+    }
+
+    render() {
     const { key, notification } = this.props;
 
     return (
@@ -35,7 +44,7 @@ export default class Notification extends Component {
           <form ref="form">
             <div className="button-group btn-group-xs">
               <button className="button-submit" type="button" onClick={ this.approve }>Goedkeuren</button>
-/*             <button className="button-submit" type="button" onClick={ this.reject }>Afwijzen</button>*/
+              <button className="button-submit" type="button" onClick={ this.reject }>Afwijzen</button>
             </div>
           </form>
         </article>

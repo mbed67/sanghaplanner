@@ -7,6 +7,7 @@ use App\Commands\ToggleRoleCommand;
 use App\Http\Requests\ApproveOrRejectMemberRequest;
 use App\Http\Requests\LeaveSanghaRequest;
 use App\Http\Requests\ToggleRoleRequest;
+use Illuminate\Support\Facades\Input;
 use Request;
 use Redirect;
 use Auth;
@@ -43,7 +44,7 @@ class MembershipsController extends Controller
      */
     public function store(ApproveOrRejectMemberRequest $request)
     {
-        if (Request::exists('approved')) {
+        if (Input::has('approved')) {
             $this->dispatchFrom(ApproveMemberCommand::class, $request);
 
             return Redirect::back();

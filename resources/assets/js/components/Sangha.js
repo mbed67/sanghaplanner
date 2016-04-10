@@ -8,6 +8,7 @@ export default class Sangha extends Component {
   render() {
     const {
         approveMembershipRequest,
+        rejectMembershipRequest,
         isAdminOfThisSangha,
         isMemberOfThisSangha,
         sangha,
@@ -38,11 +39,12 @@ export default class Sangha extends Component {
                        admins = { admins }
                        route = { routes.editSanghaRoute }
               />
-              <Members approveMembershipRequest = { approveMembershipRequest}
-                      isAdminOfThisSangha = { isAdminOfThisSangha }
-                      isMemberOfThisSangha = { isMemberOfThisSangha }
-                      sangha = { sangha }
-                      notifications = { notifications } />
+              <Members approveMembershipRequest = { approveMembershipRequest }
+                       rejectMembershipRequest = { rejectMembershipRequest }
+                       isAdminOfThisSangha = { isAdminOfThisSangha }
+                       isMemberOfThisSangha = { isMemberOfThisSangha }
+                       sangha = { sangha }
+                       notifications = { notifications } />
               <Events sangha = { sangha } retreats = { retreats } />
           </div>
       </div>

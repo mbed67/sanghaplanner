@@ -15,11 +15,19 @@ class App extends Component {
         );
     }
 
-    approveMembershipRequest(userId, sanghaId, token) {
+    approveMembershipRequest(id, userId, sanghaId) {
         this.actions.approveMembershipRequest(
+            id,
             userId,
-            sanghaId,
-            token
+            sanghaId
+        );
+    }
+
+    rejectMembershipRequest(id, userId, sanghaId) {
+        this.actions.rejectMembershipRequest(
+            id,
+            userId,
+            sanghaId
         );
     }
 
@@ -27,6 +35,7 @@ class App extends Component {
       return (
         <div id='App'>
           <Sangha approveMembershipRequest={ this.approveMembershipRequest.bind(this) }
+                  rejectMembershipRequest={ this.rejectMembershipRequest.bind(this) }
                   {...this.props}/>
         </div>
       )
@@ -38,7 +47,7 @@ const mapStateToProps = (state) => {
         isAdminOfThisSangha: state.security.isAdminOfThisSangha,
         isMemberOfThisSangha: state.security.isMemberOfThisSangha,
         sangha: state.sangha,
-        notifications: state.notifications,
+        notifications: state.notifications.notifications,
         admins: state.admins,
         retreats: state.retreats,
         routes: state.routes
