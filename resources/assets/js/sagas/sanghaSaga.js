@@ -83,7 +83,9 @@ export function* updateNotificationsForSangha() {
         const data  = yield take(actionType.UPDATE_NOTIFICATIONS);
 
         const fetchNotifications = () => {
-            return fetch('/notifications/' + data.sanghaId).then(function (response) {
+            return fetch('/notifications/' + data.sanghaId, {
+                credentials: 'same-origin'
+            }).then(function (response) {
                 return response.json();
             })
         };

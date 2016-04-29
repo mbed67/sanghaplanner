@@ -1,11 +1,11 @@
 <?php namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Sanghaplanner\Notifications\NotificationRepositoryInterface;
 use Sanghaplanner\Sanghas\SanghaRepositoryInterface;
 use Sanghaplanner\Users\UserRepositoryInterface;
 use App\Commands\JoinSanghaCommand;
 use App\Http\Requests\JoinSanghaRequest;
-use Auth;
 use \Laracasts\Flash\Flash;
 
 class NotificationsController extends Controller
@@ -62,7 +62,7 @@ class NotificationsController extends Controller
     public function fetchNotificationsForSangha($sanghaId)
     {
         $sangha = $this->sanghaRepository->findById($sanghaId);
-        $notifications = $this->notificationRepository->showMembershipRequestsForSangha($sangha, 31);
+        $notifications = $this->notificationRepository->showMembershipRequestsForSangha($sangha, auth::user()->id);
 
         return response()->json($notifications);
     }
