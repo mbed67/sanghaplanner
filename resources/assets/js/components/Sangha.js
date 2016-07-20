@@ -44,9 +44,9 @@ export default class Sangha extends Component {
                        rejectMembershipRequest = { rejectMembershipRequest }
                        isAdminOfThisSangha = { isAdminOfThisSangha }
                        isMemberOfThisSangha = { isMemberOfThisSangha }
-                       sangha = { sangha }
                        members = { members }
-                       notifications = { notifications } />
+                       notifications = { notifications }
+                       route = { routes.leaveSangha } />
               <Events sangha = { sangha } retreats = { retreats } />
           </div>
       </div>

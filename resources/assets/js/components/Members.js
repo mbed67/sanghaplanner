@@ -10,9 +10,9 @@ export default class Members extends Component {
           rejectMembershipRequest,
           isAdminOfThisSangha,
           isMemberOfThisSangha,
-          sangha,
           members,
-          notifications
+          notifications,
+          route
           } = this.props;
 
       let memberComponents = [];
@@ -56,8 +56,8 @@ export default class Members extends Component {
                                   </table>
                               </div>
                           </div>
-                          <div>
-                              Button om de sangha te verlaten
+                          <div showIfTrue>
+                              <a href={ route } className="btn btn-primary">Verlaat sangha</a>
                           </div>
                           <div showIfFalse className="alert alert-warning">U moet lid zijn om deze pagina te kunnen bekijken</div>
                       </Conditional>

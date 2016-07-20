@@ -5,15 +5,26 @@ use App\Commands\RejectMemberCommand;
 use App\Commands\LeaveSanghaCommand;
 use App\Commands\ToggleRoleCommand;
 use App\Http\Requests\ApproveOrRejectMemberRequest;
-use App\Http\Requests\LeaveSanghaRequest;
 use App\Http\Requests\ToggleRoleRequest;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Request;
 use Redirect;
-use Auth;
+use Sanghaplanner\Sanghas\SanghaRepositoryInterface;
 
 class MembershipsController extends Controller
 {
+
+    /**
+     * @var SanghaRepositoryInterface
+     */
+    private $sanghaRepository;
+
+    public function __construct(SanghaRepositoryInterface $sanghaRepository)
+    {
+        $this->sanghaRepository = $sanghaRepository;
+    }
 
     /**
      * Display a listing of the resource.
@@ -84,27 +95,28 @@ class MembershipsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
-     * @return Response
+     * @return Redirector|\Illuminate\Http\RedirectResponse
      */
     public function update(ToggleRoleRequest $request)
     {
         $this->dispatchFrom(ToggleRoleCommand::class, $request);
 
-        return Redirect::back();
+        return redirect()->back();
     }
 
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  LeaveSanghaRequest $request
-     * @return Response
+     * @param  int $sanghaIdToLeave
+     * @return Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function destroy(LeaveSanghaRequest $request)
+    public function destroy($sanghaIdToLeave)
     {
-        $this->dispatchFrom(LeaveSanghaCommand::class, $request);
+        if ($this->sanghaRepository->findById($sanghaIdToLeave)->users()->get()->contains('id', Auth::user()->id)) {
+            $this->dispatch(new LeaveSanghaCommand(Auth::user()->id, $sanghaIdToLeave));
+        }
 
-        return Redirect::back();
+        return redirect()->back();
     }
 }

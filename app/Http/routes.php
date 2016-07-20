@@ -118,8 +118,8 @@ Route::post('membership', [
         'uses' => 'MembershipsController@store'
         ]);
 
-Route::delete('membership/{id}', [
-        'as' => 'membership_path',
+Route::get('membership/{sanghaIdToLeave}', [
+        'as' => 'leave_sangha_path',
         'uses' => 'MembershipsController@destroy'
         ]);
 
