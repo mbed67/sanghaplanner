@@ -14,6 +14,7 @@ export default class Sangha extends Component {
         sangha,
         notifications,
         admins,
+        members,
         retreats,
         routes
         } = this.props;
@@ -44,6 +45,7 @@ export default class Sangha extends Component {
                        isAdminOfThisSangha = { isAdminOfThisSangha }
                        isMemberOfThisSangha = { isMemberOfThisSangha }
                        sangha = { sangha }
+                       members = { members }
                        notifications = { notifications } />
               <Events sangha = { sangha } retreats = { retreats } />
           </div>

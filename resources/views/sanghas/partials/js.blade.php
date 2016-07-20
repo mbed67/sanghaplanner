@@ -5,6 +5,7 @@
         sangha: {!! $sangha !!},
         notifications: { notifications: {!! json_encode($notifications) !!}},
         admins: {!! $admins !!},
+        members: {!! json_encode($members) !!},
         retreats: {!! $retreats !!},
         routes: {
             editSanghaRoute: "{{ route('edit_sangha_path', $sangha->id) }}",

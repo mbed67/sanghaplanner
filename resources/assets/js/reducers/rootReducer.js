@@ -3,6 +3,7 @@ import security from './security.js';
 import sangha from './sangha.js';
 import admins from './admins';
 import notifications from './notifications';
+import members from './members';
 import retreats from './retreats';
 import routes from './routes';
 
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     sangha,
     admins,
     notifications,
+    members,
     retreats,
     routes
 });

@@ -3,7 +3,6 @@
 
 @section('content')
 
-
     <div id="test-react"></div>
 
 @stop
@@ -16,6 +15,7 @@
         'sangha' => $sangha,
         'notifications' => $notifications,
         'admins' => $admins,
+        'members' => $members,
         'retreats' => $retreats
     ]
 )

@@ -11,14 +11,27 @@ export default class Members extends Component {
           isAdminOfThisSangha,
           isMemberOfThisSangha,
           sangha,
+          members,
           notifications
           } = this.props;
 
       let memberComponents = [];
 
-      sangha.users.forEach(function(member) {
-          memberComponents.push(<Member key={ member.id } member={ member }/>)
-      });
+      if(members.length > 0) {
+          members.forEach(function(member) {
+              let cell = <tr>
+                  <td className="col-md-2"> {member.firstname} {member.middlename} {member.lastname} </td>
+                  <td className="col-md-2"> {member.address} <br /> {member.zipcode} {member.place} </td>
+                  <td className="col-md-2"> {member.phone} <br /> {member.gsm} </td>
+                  <td className="col-md-2"> {member.email} </td>
+                  <td className="col-md-1"> {member.rolename} </td>
+              </tr>;
+
+              memberComponents.push(cell)
+          });
+      } else {
+          memberComponents.push(<tr><td colSpan="5">Deze sangha heeft geen leden</td></tr>);
+      }
 
       let notificationComponents = [];
 
@@ -30,13 +43,18 @@ export default class Members extends Component {
       });
 
       return (
-      <div id='Members'>
           <div role="tabpanel" className="tab-pane" id="sanghaleden">
               <div className="row">
                   <div className="col-md-9">
                       <Conditional value={ isMemberOfThisSangha }>
                           <div showIfTrue>
-                              { memberComponents }
+                              <div className="panel panel-default">
+                                  <div className="panel-heading">Leden van deze sangha</div>
+                                  <table className="table">
+                                      <tr><th>Naam</th><th>Adres</th><th>Telefoon</th><th>Email</th><th>Rol</th></tr>
+                                          { memberComponents }
+                                  </table>
+                              </div>
                           </div>
                           <div>
                               Button om de sangha te verlaten
@@ -58,8 +76,7 @@ export default class Members extends Component {
                   </div>
               </div>
           </div>
-      </div>
-    )
+      )
   }
 }
 

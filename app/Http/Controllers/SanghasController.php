@@ -119,12 +119,28 @@ class SanghasController extends Controller
         $admins = $this->getAdmins($id);
         $retreats = $this->getRetreats($id);
 
+        $members = $sangha->users()->get()->map(function($user) {
+            return [
+                'firstname' => $user->firstname,
+                'middlename' => $user->middlename,
+                'lastname' => $user->lastname,
+                'address' => $user->address,
+                'zipcode' => $user->zipcode,
+                'place' => $user->place,
+                'phone' => $user->phone,
+                'gsm' => $user->gsm,
+                'email' => $user->email,
+                'rolename' => $user->pivot->role->rolename
+            ];
+        });
+
         return view('sanghas.show', [
             'isAdminOfThisSangha' => Auth::user()->roleForSangha($sangha->id) == 'administrator' ? "true" : "false",
             'isMemberOfThisSangha' => Auth::user()->sanghas->find($sangha->id) ? "true" : "false",
             'sangha' => $sangha,
             'notifications' => $notifications,
             'admins' => $admins,
+            'members' => $members,
             'retreats' => $retreats
         ]);
     }

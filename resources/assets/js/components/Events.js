@@ -5,12 +5,10 @@ import Event from './Event';
 export default class Events extends Component {
   render() {
     return (
-      <div id='Events'>
+      <div role="tabpanel" className="tab-pane" id='evenementen'>
         Events
         <Event />
       </div>
     )
   }
 }
-
-
