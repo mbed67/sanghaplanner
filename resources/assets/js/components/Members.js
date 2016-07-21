@@ -12,14 +12,14 @@ export default class Members extends Component {
           isMemberOfThisSangha,
           members,
           notifications,
-          route
+          routes
           } = this.props;
 
       let memberComponents = [];
 
       if(members.length > 0) {
           members.forEach(function(member) {
-              let cell = <tr>
+              let cell = <tr key={member.id}>
                   <td className="col-md-2"> {member.firstname} {member.middlename} {member.lastname} </td>
                   <td className="col-md-2"> {member.address} <br /> {member.zipcode} {member.place} </td>
                   <td className="col-md-2"> {member.phone} <br /> {member.gsm} </td>
@@ -51,13 +51,15 @@ export default class Members extends Component {
                               <div className="panel panel-default">
                                   <div className="panel-heading">Leden van deze sangha</div>
                                   <table className="table">
-                                      <tr><th>Naam</th><th>Adres</th><th>Telefoon</th><th>Email</th><th>Rol</th></tr>
+                                      <tbody>
+                                        <tr><th>Naam</th><th>Adres</th><th>Telefoon</th><th>Email</th><th>Rol</th></tr>
                                           { memberComponents }
+                                      </tbody>
                                   </table>
                               </div>
                           </div>
                           <div showIfTrue>
-                              <a href={ route } className="btn btn-primary">Verlaat sangha</a>
+                              <a href={ routes.leaveSangha } className="btn btn-primary">Verlaat sangha</a>
                           </div>
                           <div showIfFalse className="alert alert-warning">U moet lid zijn om deze pagina te kunnen bekijken</div>
                       </Conditional>

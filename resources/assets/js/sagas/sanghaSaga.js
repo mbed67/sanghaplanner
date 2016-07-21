@@ -3,10 +3,13 @@ import { call, put, take } from 'redux-saga/effects';
 import * as actionType from '../constants/ActionTypes';
 import {
     updateNotifications,
+    updateMembers,
     approveMembershipRequestFailed,
     rejectMembershipRequestFailed,
     notificationsUpdated,
-    updateNotificationsForSanghaFailed
+    membersUpdated,
+    updateNotificationsForSanghaFailed,
+    updateMembersForSanghaFailed
 } from '../actions/sangha';
 
 export function* approveMembershipRequest() {
@@ -35,6 +38,7 @@ export function* approveMembershipRequest() {
             });
 
             yield put(updateNotifications(data.data.sanghaId));
+            yield put(updateMembers(data.data.sanghaId));
         }
         catch (err) {
             yield put(approveMembershipRequestFailed(err));
@@ -98,6 +102,36 @@ export function* updateNotificationsForSangha() {
         catch (err)
         {
             yield put(updateNotificationsForSanghaFailed(err));
+        }
+    }
+}
+
+export function* updateMembersForSangha() {
+
+    while(true) {
+        // Wait for the UPDATE_MEMBERS action
+        const data  = yield take(actionType.UPDATE_MEMBERS);
+
+        console.log(data);
+
+        const fetchMembers = () => {
+            return fetch('/sanghas/' + data.sanghaId + '/members', {
+                credentials: 'same-origin'
+            }).then(function (response) {
+                return response.json();
+            })
+        };
+
+        try {
+            console.log('ik ga de members ophalen');
+            const members = yield call(fetchMembers);
+            console.log(members);
+
+            yield put(membersUpdated(members));
+        }
+        catch (err)
+        {
+            yield put(updateMembersForSanghaFailed(err));
         }
     }
 }

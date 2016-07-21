@@ -5,11 +5,13 @@ use App\Http\Requests\CreateSanghaRequest;
 use App\Http\Requests\EditSanghaRequest;
 use App\Commands\CreateSanghaCommand;
 use App\Commands\EditSanghaCommand;
+use Illuminate\Support\Collection;
 use Sanghaplanner\Sanghas\SanghaRepositoryInterface;
 use Sanghaplanner\Roles\RoleRepositoryInterface;
 use Sanghaplanner\Notifications\NotificationRepositoryInterface;
 use Sanghaplanner\Retreats\RetreatRepositoryInterface;
 use Sanghaplanner\Facades\Search;
+use Sanghaplanner\Sanghas\Sangha;
 use \Laracasts\Flash\Flash;
 
 class SanghasController extends Controller
@@ -118,21 +120,7 @@ class SanghasController extends Controller
         $notifications = $this->notificationRepository->showMembershipRequestsForSangha($sangha, Auth::id());
         $admins = $this->getAdmins($id);
         $retreats = $this->getRetreats($id);
-
-        $members = $sangha->users()->get()->map(function($user) {
-            return [
-                'firstname' => $user->firstname,
-                'middlename' => $user->middlename,
-                'lastname' => $user->lastname,
-                'address' => $user->address,
-                'zipcode' => $user->zipcode,
-                'place' => $user->place,
-                'phone' => $user->phone,
-                'gsm' => $user->gsm,
-                'email' => $user->email,
-                'rolename' => $user->pivot->role->rolename
-            ];
-        });
+        $members = $this->getMembers($sangha);
 
         return view('sanghas.show', [
             'isAdminOfThisSangha' => Auth::user()->roleForSangha($sangha->id) == 'administrator' ? "true" : "false",
@@ -196,6 +184,18 @@ class SanghasController extends Controller
     }
 
     /**
+     * @param int $id
+     * @return string
+     */
+    public function getMembersForSangha($id)
+    {
+        $sangha = $this->sanghaRepository->findById($id);
+        if ($sangha) {
+            return json_encode($this->getMembers($sangha));
+        }
+    }
+
+    /**
      * Returns the administrators for the sangha
      *
      * @param $sanghaId
@@ -218,5 +218,28 @@ class SanghasController extends Controller
         $sanghaUserIds = $this->sanghaRepository->findSanghaUserIdsForSangha($sanghaId);
         return $this->retreatRepository->getRetreatsForSangha($sanghaUserIds);
 
+    }
+
+    /**
+     * @param Sangha $sangha
+     * @return Collection
+     */
+    private function getMembers($sangha)
+    {
+        return $sangha->users()->get()->map(function($user) {
+            return [
+                'id' => $user->id,
+                'firstname' => $user->firstname,
+                'middlename' => $user->middlename,
+                'lastname' => $user->lastname,
+                'address' => $user->address,
+                'zipcode' => $user->zipcode,
+                'place' => $user->place,
+                'phone' => $user->phone,
+                'gsm' => $user->gsm,
+                'email' => $user->email,
+                'rolename' => $user->pivot->role->rolename
+            ];
+        });
     }
 }

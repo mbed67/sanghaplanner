@@ -18,6 +18,14 @@ export function updateNotifications(sanghaId) {
     }
 }
 
+export function updateMembers(sanghaId) {
+    console.log('in de action updateMembers');
+    return {
+        type: actionType.UPDATE_MEMBERS,
+        sanghaId: sanghaId
+    }
+}
+
 export function approveMembershipRequestFailed(err) {
     return {
         type: actionType.APPROVE_MEMBERSHIP_REQUEST_FAILED,
@@ -53,6 +61,20 @@ export function notificationsUpdated(data) {
 export function updateNotificationsForSanghaFailed(err) {
     return {
         type: actionType.UPDATE_NOTIFICATIONS_FOR_SANGHA_FAILED,
+        err
+    }
+}
+
+export function membersUpdated(data) {
+    return {
+        type: actionType.MEMBERS_UPDATED,
+        data: data
+    }
+}
+
+export function updateMembersForSanghaFailed(err) {
+    return {
+        type: actionType.UPDATE_MEMBERS_FOR_SANGHA_FAILED,
         err
     }
 }

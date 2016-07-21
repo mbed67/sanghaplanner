@@ -88,6 +88,12 @@ Route::post('sanghas/{id}', [
         'uses' => 'SanghasController@update'
         ]);
 
+Route::get('sanghas/{id}/members',[
+        'middleware' => 'memberOfSangha',
+        'as' => 'get_sangha_members_path',
+        'uses' => 'SanghasController@getMembersForSangha'
+]);
+
 
 /**
  * Roles
