@@ -31,11 +31,18 @@ class App extends Component {
         );
     }
 
+    toggleRole(userId, sanghaId) {
+        this.actions.toggleRole(
+            userId,
+            sanghaId);
+    }
+
     render() {
       return (
         <div id='App'>
           <Sangha approveMembershipRequest={ this.approveMembershipRequest.bind(this) }
                   rejectMembershipRequest={ this.rejectMembershipRequest.bind(this) }
+                  toggleRole={ this.toggleRole.bind(this) }
                   {...this.props}/>
         </div>
       )

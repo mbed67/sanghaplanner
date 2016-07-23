@@ -19,7 +19,6 @@ export function updateNotifications(sanghaId) {
 }
 
 export function updateMembers(sanghaId) {
-    console.log('in de action updateMembers');
     return {
         type: actionType.UPDATE_MEMBERS,
         sanghaId: sanghaId
@@ -76,5 +75,15 @@ export function updateMembersForSanghaFailed(err) {
     return {
         type: actionType.UPDATE_MEMBERS_FOR_SANGHA_FAILED,
         err
+    }
+}
+
+export function toggleRole(userId, sanghaId) {
+    return {
+        type: actionType.TOGGLE_ROLE,
+        data: {
+            userId: userId,
+            sanghaId: sanghaId
+        }
     }
 }

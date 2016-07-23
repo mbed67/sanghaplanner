@@ -6,7 +6,8 @@ import {
     approveMembershipRequest,
     rejectMembershipRequest,
     updateNotificationsForSangha,
-    updateMembersForSangha
+    updateMembersForSangha,
+    toggleRole
 } from '../sagas/sanghaSaga';
 
 export default function configureStore(sanghaInitialState) {
@@ -17,7 +18,8 @@ export default function configureStore(sanghaInitialState) {
             approveMembershipRequest,
             rejectMembershipRequest,
             updateNotificationsForSangha,
-            updateMembersForSangha
+            updateMembersForSangha,
+            toggleRole
         ))
     )
 }

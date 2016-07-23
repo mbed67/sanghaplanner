@@ -129,7 +129,7 @@ Route::get('membership/{sanghaIdToLeave}', [
         'uses' => 'MembershipsController@destroy'
         ]);
 
-Route::put('updatemembership', [
+Route::post('updatemembership', [
         'as' => 'updatemembership_path',
         'uses' => 'MembershipsController@update'
         ]);

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Conditional from 'react-conditional-component';
-import Member from './Member';
+import MemberConfig from './MemberConfig';
 import Notification from './Notification';
 
 export default class Members extends Component {
@@ -12,19 +12,27 @@ export default class Members extends Component {
           isMemberOfThisSangha,
           members,
           notifications,
-          routes
+          routes,
+          sangha,
+          toggleRole
           } = this.props;
 
       let memberComponents = [];
 
       if(members.length > 0) {
           members.forEach(function(member) {
-              let cell = <tr key={member.id}>
-                  <td className="col-md-2"> {member.firstname} {member.middlename} {member.lastname} </td>
-                  <td className="col-md-2"> {member.address} <br /> {member.zipcode} {member.place} </td>
-                  <td className="col-md-2"> {member.phone} <br /> {member.gsm} </td>
-                  <td className="col-md-2"> {member.email} </td>
-                  <td className="col-md-1"> {member.rolename} </td>
+              let cell = <tr key={ member.id }>
+                  <td className="col-md-2"> { member.firstname } { member.middlename } { member.lastname } </td>
+                  <td className="col-md-2"> { member.address } <br /> { member.zipcode } { member.place } </td>
+                  <td className="col-md-2"> { member.phone } <br /> { member.gsm } </td>
+                  <td className="col-md-2"> { member.email } </td>
+                  <td className="col-md-1"> { member.rolename } <br />
+                      <MemberConfig role={ member.rolename }
+                                    toggleRole={ toggleRole}
+                                    userId={ member.id }
+                                    sanghaId={ sangha.id }
+                      />
+                  </td>
               </tr>;
 
               memberComponents.push(cell)
@@ -43,7 +51,7 @@ export default class Members extends Component {
                                                         rejectMembershipRequest = { rejectMembershipRequest }/>)
           });
       } else {
-          notificationComponents.push(<p>Er zijn geen verzoeken.</p>);
+          notificationComponents.push(<p key="notification-0">Er zijn geen verzoeken.</p>);
       }
 
       return (
