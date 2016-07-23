@@ -35,12 +35,16 @@ export default class Members extends Component {
 
       let notificationComponents = [];
 
-      notifications.forEach(function(notification){
-          notificationComponents.push(<Notification key={ notification.id }
-                                                    notification = { notification }
-                                                    approveMembershipRequest = { approveMembershipRequest }
-                                                    rejectMembershipRequest = { rejectMembershipRequest }/>)
-      });
+      if(notifications.length > 0) {
+          notifications.forEach(function(notification){
+              notificationComponents.push(<Notification key={ notification.id }
+                                                        notification = { notification }
+                                                        approveMembershipRequest = { approveMembershipRequest }
+                                                        rejectMembershipRequest = { rejectMembershipRequest }/>)
+          });
+      } else {
+          notificationComponents.push(<p>Er zijn geen verzoeken.</p>);
+      }
 
       return (
           <div role="tabpanel" className="tab-pane" id="sanghaleden">
@@ -59,7 +63,7 @@ export default class Members extends Component {
                               </div>
                           </div>
                           <div showIfTrue>
-                              <a href={ routes.leaveSangha } className="btn btn-primary">Verlaat sangha</a>
+                              <a href={ routes.leaveSangha } className="btn btn-danger btn-sm">Verlaat sangha</a>
                           </div>
                           <div showIfFalse className="alert alert-warning">
                               U moet lid zijn om deze pagina te kunnen bekijken
