@@ -61,7 +61,9 @@ export default class Members extends Component {
                           <div showIfTrue>
                               <a href={ routes.leaveSangha } className="btn btn-primary">Verlaat sangha</a>
                           </div>
-                          <div showIfFalse className="alert alert-warning">U moet lid zijn om deze pagina te kunnen bekijken</div>
+                          <div showIfFalse className="alert alert-warning">
+                              U moet lid zijn om deze pagina te kunnen bekijken
+                          </div>
                       </Conditional>
                   </div>
                   <div className="col-md-3">

@@ -112,8 +112,6 @@ export function* updateMembersForSangha() {
         // Wait for the UPDATE_MEMBERS action
         const data  = yield take(actionType.UPDATE_MEMBERS);
 
-        console.log(data);
-
         const fetchMembers = () => {
             return fetch('/sanghas/' + data.sanghaId + '/members', {
                 credentials: 'same-origin'
@@ -123,9 +121,7 @@ export function* updateMembersForSangha() {
         };
 
         try {
-            console.log('ik ga de members ophalen');
             const members = yield call(fetchMembers);
-            console.log(members);
 
             yield put(membersUpdated(members));
         }

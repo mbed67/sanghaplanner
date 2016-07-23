@@ -27,9 +27,21 @@ export default class Sangha extends Component {
                   <h1>{ sangha.sanghaname } </h1>
                   <div>
                       <ul className="nav nav-tabs" role="tablist" id="sanghaTab">
-                          <li role="presentation" className="active"><a href="#algemeen" aria-controls="algemeen" role="tab" data-toggle="tab">Algemeen</a></li>
-                          <li role="presentation"><a href="#sanghaleden" aria-controls="sanghaleden" role="tab" data-toggle="tab">Sanghaleden</a></li>
-                          <li role="presentation"><a href="#evenementen" aria-controls="evenementen" role="tab" data-toggle="tab">Evenementen</a></li>
+                          <li role="presentation" className="active">
+                              <a href="#algemeen" aria-controls="algemeen" role="tab" data-toggle="tab">
+                                  Algemeen
+                              </a>
+                          </li>
+                          <li role="presentation">
+                              <a href="#sanghaleden" aria-controls="sanghaleden" role="tab" data-toggle="tab">
+                                  Sanghaleden
+                              </a>
+                          </li>
+                          <li role="presentation">
+                              <a href="#evenementen" aria-controls="evenementen" role="tab" data-toggle="tab">
+                                  Evenementen
+                              </a>
+                          </li>
                       </ul>
                   </div>
               </div>
@@ -46,7 +58,8 @@ export default class Sangha extends Component {
                        isMemberOfThisSangha = { isMemberOfThisSangha }
                        members = { members }
                        notifications = { notifications }
-                       routes = { routes } />
+                       routes = { routes }
+              />
               <Events sangha = { sangha } retreats = { retreats } />
           </div>
       </div>
