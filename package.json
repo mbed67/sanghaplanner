@@ -4,6 +4,7 @@
     "babelify": "^6.3.0",
     "es6-shim": "^0.33.9",
     "eslint-plugin-react": "^3.7.1",
+    "font-awesome": "^4.4.0",
     "grunt": "^0.4.5",
     "grunt-autoprefixer": "~3.0.0",
     "grunt-babel": "^5.0.3",
@@ -34,5 +35,8 @@
     "react-redux": "^4.0.0",
     "redux": "^3.0.3",
     "redux-saga": "^0.9.5"
+  },
+  "scripts": {
+    "postinstall": "./node_modules/grunt-cli/bin/grunt"
   }
 }

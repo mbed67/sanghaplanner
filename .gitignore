@@ -16,3 +16,4 @@ codeception.yml
 .idea
 /public/css/*
 /public/js/*
+/public/fonts/*
