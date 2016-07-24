@@ -31,5 +31,6 @@ class Kernel extends HttpKernel
         'adminForSangha' => 'App\Http\Middleware\AdminForSangha',
         'memberOfSangha' => 'App\Http\Middleware\MemberOfSangha',
         'ownerOfProfile' => 'App\Http\Middleware\OwnerOfProfile',
+        'mayRemoveUserFromSangha' => 'App\Http\MiddleWare\MayRemoveUserFromSangha'
     ];
 }
