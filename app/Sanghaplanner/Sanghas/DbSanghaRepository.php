@@ -9,13 +9,13 @@ class DbSanghaRepository extends DbRepository implements SanghaRepositoryInterfa
 
     /**
      *
-     * @var Sanghaplanner\Sanghas\Sangha
+     * @var Sangha
      */
     protected $model;
 
     /**
      *
-     * @param Sangha $model
+     * @param Sangha $sangha
      */
     public function __construct(Sangha $sangha)
     {
@@ -48,7 +48,8 @@ class DbSanghaRepository extends DbRepository implements SanghaRepositoryInterfa
      *
      * @param Sangha $sangha
      * @param User $user
-     * @param integer $role_id
+     * @param int $role_id
+     * @return bool
      */
     public function createSanghaUser(Sangha $sangha, User $user, $role_id)
     {
@@ -64,6 +65,7 @@ class DbSanghaRepository extends DbRepository implements SanghaRepositoryInterfa
      *
      * @param Sangha $sangha
      * @param User $user
+     * @return bool
      */
     public function deleteSanghaUser(Sangha $sangha, User $user)
     {
@@ -126,8 +128,9 @@ class DbSanghaRepository extends DbRepository implements SanghaRepositoryInterfa
     /**
      * Returns the id on the pivot table for the user with this sangha
      *
-     * @param $id
-     * @return integer
+     * @param Sangha $sangha
+     * @param int $userId
+     * @return int
      */
     public function findPivotId($sangha, $userId)
     {

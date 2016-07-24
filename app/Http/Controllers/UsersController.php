@@ -17,7 +17,7 @@ class UsersController extends Controller
     protected $userRepository;
 
     /**
-     * @param UserRepository $userRepository
+     * @param UserRepositoryInterface $userRepository
      */
     public function __construct(UserRepositoryInterface $userRepository)
     {

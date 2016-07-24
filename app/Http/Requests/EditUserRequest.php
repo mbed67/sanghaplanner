@@ -23,7 +23,6 @@ class EditUserRequest extends Request
     /**
      * Get the validation rules that apply to the request.
      *
-     * @param Sanghaplanner\Users\UserRepositoryInterface $repository
      * @return array
      */
     public function rules()
