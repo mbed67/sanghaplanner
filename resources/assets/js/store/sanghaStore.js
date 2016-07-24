@@ -7,7 +7,8 @@ import {
     rejectMembershipRequest,
     updateNotificationsForSangha,
     updateMembersForSangha,
-    toggleRole
+    toggleRole,
+    removeMember
 } from '../sagas/sanghaSaga';
 
 export default function configureStore(sanghaInitialState) {
@@ -19,7 +20,8 @@ export default function configureStore(sanghaInitialState) {
             rejectMembershipRequest,
             updateNotificationsForSangha,
             updateMembersForSangha,
-            toggleRole
+            toggleRole,
+            removeMember
         ))
     )
 }

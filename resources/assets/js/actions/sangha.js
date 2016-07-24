@@ -87,3 +87,13 @@ export function toggleRole(userId, sanghaId) {
         }
     }
 }
+
+export function removeMember(userId, sanghaId) {
+    return {
+        type: actionType.REMOVE_MEMBER,
+        data: {
+            userId: userId,
+            sanghaId: sanghaId
+        }
+    }
+}

@@ -6,10 +6,13 @@ use App\Commands\LeaveSanghaCommand;
 use App\Commands\ToggleRoleCommand;
 use App\Http\Requests\ApproveOrRejectMemberRequest;
 use App\Http\Requests\ToggleRoleRequest;
+use App\Http\Requests\RemoveMemberRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Request;
+use Illuminate\Support\Facades\Request;
+use Psy\Util\Json;
 use Redirect;
 use Sanghaplanner\Sanghas\SanghaRepositoryInterface;
 
@@ -21,6 +24,11 @@ class MembershipsController extends Controller
      */
     private $sanghaRepository;
 
+    /**
+     * MembershipsController constructor.
+     *
+     * @param SanghaRepositoryInterface $sanghaRepository
+     */
     public function __construct(SanghaRepositoryInterface $sanghaRepository)
     {
         $this->sanghaRepository = $sanghaRepository;
@@ -36,7 +44,6 @@ class MembershipsController extends Controller
         //
     }
 
-
     /**
      * Show the form for creating a new resource.
      *
@@ -47,10 +54,10 @@ class MembershipsController extends Controller
         //
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
+     * @param ApproveOrRejectMemberRequest $request
      * @return Response
      */
     public function store(ApproveOrRejectMemberRequest $request)
@@ -67,34 +74,10 @@ class MembershipsController extends Controller
         }
     }
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-
     /**
      * Update the specified resource in storage.
      *
+     * @param ToggleRoleRequest $request
      * @return Redirector|\Illuminate\Http\RedirectResponse
      */
     public function update(ToggleRoleRequest $request)
@@ -104,19 +87,36 @@ class MembershipsController extends Controller
         return redirect()->back();
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  int $sanghaIdToLeave
      * @return Redirector|\Illuminate\Http\RedirectResponse
      */
-    public function destroy($sanghaIdToLeave)
+    public function leaveSangha($sanghaIdToLeave)
     {
         if ($this->sanghaRepository->findById($sanghaIdToLeave)->users()->get()->contains('id', Auth::user()->id)) {
             $this->dispatch(new LeaveSanghaCommand(Auth::user()->id, $sanghaIdToLeave));
         }
 
-        return redirect()->back();
+        return new JsonResponse();
+    }
+
+    /**
+     * Remove the specified member from the sangha.
+     *
+     * @param RemoveMemberRequest $request
+     * @return Redirector|\Illuminate\Http\RedirectResponse
+     */
+    public function removeFromSangha(RemoveMemberRequest $request)
+    {
+        if ($this->sanghaRepository->findById(Input::get('sanghaIdToUnjoin'))
+            ->users()
+            ->get()
+            ->contains('id', Input::get('userId'))) {
+            $this->dispatch(new LeaveSanghaCommand(Input::get('userId'), Input::get('sanghaIdToUnjoin')));
+        }
+
+        return new JsonResponse();
     }
 }

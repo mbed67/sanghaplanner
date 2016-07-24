@@ -9,7 +9,7 @@ import {
     notificationsUpdated,
     membersUpdated,
     updateNotificationsForSanghaFailed,
-    updateMembersForSanghaFailed
+    updateMembersForSanghaFailed,
 } from '../actions/sangha';
 
 export function* approveMembershipRequest() {
@@ -160,6 +160,38 @@ export function* toggleRole() {
         }
         catch (err) {
             console.log('error toggling Role');
+        }
+    }
+}
+
+export function* removeMember() {
+
+    while(true) {
+        // Wait for the TOGGLE_ROLE action
+        const data  = yield take(actionType.REMOVE_MEMBER);
+        var payload = {
+            'userId': data.data.userId,
+            'sanghaIdToUnjoin': data.data.sanghaId,
+            '_token': $('meta[name="csrf-token"]').attr('content')
+        };
+
+        var formData = $.param(payload);
+
+        try {
+            yield call(fetch, '/membership/remove', {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin', //to send the cookie
+                headers: new Headers({
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    'X-Requested-With': 'XMLHttpRequest'
+                })
+            });
+
+            yield put(updateMembers(data.data.sanghaId));
+        }
+        catch (err) {
+            console.log('error removing member');
         }
     }
 }

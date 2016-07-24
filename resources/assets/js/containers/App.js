@@ -37,12 +37,19 @@ class App extends Component {
             sanghaId);
     }
 
+    removeMember(userId, sanghaId) {
+        this.actions.removeMember(
+            userId,
+            sanghaId);
+    }
+
     render() {
       return (
         <div id='App'>
           <Sangha approveMembershipRequest={ this.approveMembershipRequest.bind(this) }
                   rejectMembershipRequest={ this.rejectMembershipRequest.bind(this) }
                   toggleRole={ this.toggleRole.bind(this) }
+                  removeMember = { this.removeMember.bind(this) }
                   {...this.props}/>
         </div>
       )

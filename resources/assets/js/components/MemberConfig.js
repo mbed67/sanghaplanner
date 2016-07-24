@@ -6,10 +6,15 @@ export default class MemberConfig extends Component {
         super(props);
 
         this.toggleRole = this.toggleRole.bind(this);
+        this.removeMember = this.removeMember.bind(this);
     }
 
     toggleRole() {
         this.props.toggleRole(this.props.userId, this.props.sanghaId);
+    }
+
+    removeMember() {
+        this.props.removeMember(this.props.userId, this.props.sanghaId);
     }
 
     render() {
@@ -27,7 +32,7 @@ export default class MemberConfig extends Component {
           </a>
           <div className="dropdown-menu" aria-labelledby="MemberConfig">
             <li><a onClick={ this.toggleRole }>{ toggleRoleText }</a></li>
-            <li><a href="#">Verwijder</a></li>
+            <li><a onClick={ this.removeMember }>Verwijder</a></li>
           </div>
         </div>
     );

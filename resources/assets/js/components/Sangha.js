@@ -17,7 +17,8 @@ export default class Sangha extends Component {
         members,
         retreats,
         routes,
-        toggleRole
+        toggleRole,
+        removeMember
         } = this.props;
 
     return (
@@ -62,6 +63,7 @@ export default class Sangha extends Component {
                        routes = { routes }
                        sangha = { sangha }
                        toggleRole = { toggleRole }
+                       removeMember = { removeMember }
               />
               <Events sangha = { sangha } retreats = { retreats } />
           </div>

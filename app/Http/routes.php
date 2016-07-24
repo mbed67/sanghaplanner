@@ -126,13 +126,19 @@ Route::post('membership', [
 
 Route::get('membership/{sanghaIdToLeave}', [
         'as' => 'leave_sangha_path',
-        'uses' => 'MembershipsController@destroy'
+        'uses' => 'MembershipsController@leaveSangha'
         ]);
 
 Route::post('updatemembership', [
         'as' => 'updatemembership_path',
         'uses' => 'MembershipsController@update'
         ]);
+
+Route::post('membership/remove', [
+        'middleware' => 'mayRemoveUserFromSangha',
+        'as' => 'remove_from_sangha_path',
+        'uses' => 'MembershipsController@removeFromSangha'
+]);
 
 /**
  * Notifications

@@ -14,7 +14,8 @@ export default class Members extends Component {
           notifications,
           routes,
           sangha,
-          toggleRole
+          toggleRole,
+          removeMember
           } = this.props;
 
       let memberComponents = [];
@@ -29,6 +30,7 @@ export default class Members extends Component {
                   <td className="col-md-1"> { member.rolename } <br />
                       <MemberConfig role={ member.rolename }
                                     toggleRole={ toggleRole}
+                                    removeMember={ removeMember }
                                     userId={ member.id }
                                     sanghaId={ sangha.id }
                       />
