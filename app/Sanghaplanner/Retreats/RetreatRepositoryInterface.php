@@ -1,6 +1,7 @@
 <?php namespace Sanghaplanner\Retreats;
 
 use Sanghaplanner\Tasks\Task;
+use Illuminate\Database\Eloquent\Collection;
 
 interface RetreatRepositoryInterface
 {
@@ -29,7 +30,7 @@ interface RetreatRepositoryInterface
      * Returns a list of all retreats for an array of sangha_users
      *
      * @param $sanghaUserIds
-     * @return array
+     * @return Collection
      */
     public function getRetreatsForSangha($sanghaUserIds);
 

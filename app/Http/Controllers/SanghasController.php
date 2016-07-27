@@ -199,7 +199,7 @@ class SanghasController extends Controller
      * Returns the administrators for the sangha
      *
      * @param $sanghaId
-     * @return array
+     * @return Collection
      */
     private function getAdmins($sanghaId)
     {
@@ -211,13 +211,22 @@ class SanghasController extends Controller
      * Returns the retreats for the sangha
      *
      * @param $sanghaId
-     * @return array
+     * @return Collection
      */
     private function getRetreats($sanghaId)
     {
         $sanghaUserIds = $this->sanghaRepository->findSanghaUserIdsForSangha($sanghaId);
-        return $this->retreatRepository->getRetreatsForSangha($sanghaUserIds);
 
+        $retreats = $this->retreatRepository->getRetreatsForSangha($sanghaUserIds)->map(function($retreat){
+            return [
+                'id' => $retreat->id,
+                'description' => $retreat->description,
+                'retreat_start' => $retreat->retreat_start->format('d-m-Y H:i'),
+                'retreat_end' => $retreat->retreat_end->format('d-m-Y H:i')
+            ];
+        });
+
+        return $retreats;
     }
 
     /**

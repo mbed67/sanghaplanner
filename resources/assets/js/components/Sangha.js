@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import General from './General';
-import Events from './Events';
+import Retreats from './Retreats';
 import Members from './Members';
 
 export default class Sangha extends Component {
@@ -65,7 +65,12 @@ export default class Sangha extends Component {
                        toggleRole = { toggleRole }
                        removeMember = { removeMember }
               />
-              <Events sangha = { sangha } retreats = { retreats } />
+              <Retreats sangha = { sangha }
+                       retreats = { retreats }
+                       isAdminOfThisSangha = { isAdminOfThisSangha }
+                       isMemberOfThisSangha = { isMemberOfThisSangha }
+                       routes = { routes }
+              />
           </div>
       </div>
     )
