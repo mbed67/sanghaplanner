@@ -3,7 +3,7 @@
 
 @section('content')
 
-    <div id="test-react"></div>
+    <div id="sangha-react"></div>
 
 @stop
 

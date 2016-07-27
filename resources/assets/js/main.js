@@ -11,5 +11,5 @@ render(
     <Provider store = { store }>
         <App />
     </Provider>,
-    document.getElementById('test-react')
+    document.getElementById('sangha-react')
 );
