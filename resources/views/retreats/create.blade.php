@@ -7,7 +7,7 @@
 
         @include('layouts.partials.errors')
 
-        {!! Form::open(['route' => ['sanghas.retreats.store', $sanghaId]]) !!}
+        {!! Form::open(['route' => ['store_retreat_path', $sanghaId]]) !!}
            {!! Form::hidden('sanghaId', $sanghaId) !!}
 
             <!-- sanghaname form input -->

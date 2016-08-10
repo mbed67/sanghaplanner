@@ -158,12 +158,20 @@ Route::get('notifications/{sanghaId}', [
     'uses' => 'NotificationsController@fetchNotificationsForSangha'
 ]);
 
+Route::get('sanghas/{sanghaId}/retreats/create', [
+    'as' => 'create_retreat_path',
+    'uses' => 'SanghaRetreatController@create'
+]);
 
-/**
- * Retreats
- */
-Route::resource('sanghas.retreats', 'SanghaRetreatController');
+Route::post('sanghas/{sanghaId}/retreats', [
+    'as' => 'store_retreat_path',
+    'uses' => 'SanghaRetreatController@store'
+]);
 
+Route::get('sanghas/{sanghaId}/retreats/{retreatId}', [
+    'as' => 'show_retreat_path',
+    'uses' => 'SanghaRetreatController@show'
+]);
 
 /**
  * Tasks
