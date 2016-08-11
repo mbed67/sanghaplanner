@@ -3,6 +3,7 @@
 use Auth;
 use App\Http\Requests\CreateRetreatRequest;
 use App\Commands\CreateRetreatCommand;
+use Illuminate\Http\Response;
 use Sanghaplanner\Facades\Search;
 use \Laracasts\Flash\Flash;
 use Sanghaplanner\Retreats\RetreatRepositoryInterface;
@@ -52,7 +53,8 @@ class SanghaRetreatController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $sanghaId
+     * @param int $retreatId
      * @return Response
      */
     public function show($sanghaId, $retreatId)
@@ -66,16 +68,5 @@ class SanghaRetreatController extends Controller
             'retreat' => $retreat,
             'participants' => $participants
         ]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
