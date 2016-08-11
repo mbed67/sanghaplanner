@@ -6,6 +6,7 @@ import notifications from './notifications';
 import members from './members';
 import retreats from './retreats';
 import routes from './routes';
+import modals from './modals';
 
 const rootReducer = combineReducers({
     security,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     notifications,
     members,
     retreats,
-    routes
+    routes,
+    modals
 });
 
 export default rootReducer;

@@ -6,7 +6,7 @@
         notifications: { notifications: {!! json_encode($notifications) !!}},
         admins: {!! $admins !!},
         members: { members: {!! json_encode($members) !!}},
-        retreats: {!! $retreats !!},
+        retreats: { retreats: {!! json_encode($retreats) !!}},
         routes: {
             editSanghaRoute: "{{ route('edit_sangha_path', $sangha->id) }}",
             createRetreat: "{{ route('create_retreat_path', $sangha->id) }}",
@@ -14,6 +14,12 @@
             leaveSangha: "{{ route('leave_sangha_path', $sangha->id) }}",
             getSanghaMembers: "{{ route('get_sangha_members_path', $sangha->id) }}",
             updateMembership: "{{ route('updatemembership_path') }}"
+        },
+        modals: {
+            CreateRetreat: {
+                bsSize: "lg",
+                show: false
+            }
         }
-    };
+};
 </script>
