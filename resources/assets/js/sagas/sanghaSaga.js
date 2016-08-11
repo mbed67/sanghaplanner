@@ -10,6 +10,11 @@ import {
     membersUpdated,
     updateNotificationsForSanghaFailed,
     updateMembersForSanghaFailed,
+    createRetreatForSangha,
+    createRetreatForSanghaFailed,
+    updateRetreatsForSangha,
+    retreatsUpdated,
+    updateRetreatsForSanghaFailed
 } from '../actions/sangha';
 
 export function* approveMembershipRequest() {
@@ -192,6 +197,64 @@ export function* removeMember() {
         }
         catch (err) {
             console.log('error removing member');
+        }
+    }
+}
+
+export function* createRetreat() {
+
+    while(true) {
+        const data  = yield take(actionType.CREATE_RETREAT);
+        var payload = {
+            'sanghaId': data.data.sanghaId,
+            'description': data.data.description,
+            'retreatStart': data.data.retreatStart,
+            'retreatEnd': data.data.retreatEnd,
+            '_token': $('meta[name="csrf-token"]').attr('content')
+        };
+
+        var formData = $.param(payload);
+
+        try {
+            yield call(fetch, '/sanghas' + data.sanghaId + '/retreats/create', {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin', //to send the cookie
+                headers: new Headers({
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    'X-Requested-With': 'XMLHttpRequest'
+                })
+            });
+
+            yield put(updateRetreats(data.data.sanghaId));
+        }
+        catch (err) {
+            yield put(createRetreatForSanghaFailed(err));
+        }
+    }
+}
+
+export function* updateRetreats() {
+
+    while(true) {
+        const data  = yield take(actionType.UPDATE_RETREATS);
+
+        const fetchRetreats = () => {
+            return fetch('/sanghas/' + data.sanghaId + '/retreats', {
+                credentials: 'same-origin'
+            }).then(function (response) {
+                return response.json();
+            })
+        };
+
+        try {
+            const retreats = yield call(fetchRetreats);
+
+            yield put(retreatsUpdated(retreats));
+        }
+        catch (err)
+        {
+            yield put(updateRetreatsForSanghaFailed(err));
         }
     }
 }

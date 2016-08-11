@@ -8,7 +8,9 @@ import {
     updateNotificationsForSangha,
     updateMembersForSangha,
     toggleRole,
-    removeMember
+    removeMember,
+    createRetreat,
+    updateRetreats
 } from '../sagas/sanghaSaga';
 
 export default function configureStore(sanghaInitialState) {
@@ -21,7 +23,9 @@ export default function configureStore(sanghaInitialState) {
             updateNotificationsForSangha,
             updateMembersForSangha,
             toggleRole,
-            removeMember
+            removeMember,
+            createRetreat,
+            updateRetreats
         ))
     )
 }

@@ -97,3 +97,56 @@ export function removeMember(userId, sanghaId) {
         }
     }
 }
+
+export function createRetreatForSangha(sanghaId, description, retreatStart, retreatEnd) {
+    return {
+        type: actionType.CREATE_RETREAT,
+        sanghaId: sanghaId,
+        description: description,
+        retreatStart: retreatStart,
+        retreatEnd: retreatEnd
+    }
+}
+
+export function updateRetreatsForSangha(sanghaId) {
+    return {
+        type: actionType.UPDATE_RETREATS,
+        sanghaId: sanghaId
+    }
+}
+
+export function retreatsUpdated(data) {
+    return {
+        type: actionType.RETREATS_UPDATED,
+        data: data
+    }
+}
+
+export function updateRetreatsForSanghaFailed(err) {
+    return {
+        type: actionType.UPDATE_RETREATS_FOR_SANGHA_FAILED,
+        err
+    }
+}
+
+export function createRetreatForSanghaFailed(err) {
+    return {
+        type: actionType.CREATE_RETREAT_FOR_SANGHA_FAILED,
+        err
+    }
+}
+
+export function showCreateRetreatModal(modalType, sanghaId) {
+    return {
+        type: actionType.SHOW_MODAL,
+        modalType: modalType,
+        sanghaId: sanghaId
+    }
+}
+
+export function hideModal(modalType) {
+    return {
+        type: actionType.HIDE_MODAL,
+        modalType: modalType
+    }
+}
