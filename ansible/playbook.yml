@@ -1,0 +1,51 @@
+---
+- name: Sanghaplanner Provisioning
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: add php7.0 repository
+    apt_repository: repo='ppa:ondrej/php'
+
+  - name: update packages
+    apt: update_cache=yes
+
+  - name: install packages
+    apt: name={{ item }} state=latest
+    with_items:
+      - vim
+      - mysql-server
+      - python-mysqldb
+      - php7.0
+      - php7.0-fpm
+      - php7.0-mbstring
+      - php7.0-mcrypt
+      - php7.0-mysql
+      - php-xdebug
+      - php-xml
+      - nodejs-legacy
+      - npm
+
+  - name: unlink default nginx configuration
+    file: path=/etc/nginx/sites-enabled/default state=absent
+
+  - name: delete default nginx configuration
+    file: path=/etc/nginx/sites-available/default state=absent
+
+  - name: create database
+    mysql_db: name=sanghaplanner state=present
+
+  - name: create database user
+    mysql_user: name=vagrant password=vagrant host=% priv=*.*:ALL state=present
+
+  - name: allow remote mysql connections
+    lineinfile: dest=/etc/mysql/my.cnf regexp='bind-address\s*=\s*127\.0\.0\.1\s*' line='bind-address = 0.0.0.0' state=present
+
+  - name: run database migrations
+    shell: cd /vagrant && php artisan migrate
+
+  - name: download composer
+    shell: curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+
+  - name: composer install
+    shell: composer install
