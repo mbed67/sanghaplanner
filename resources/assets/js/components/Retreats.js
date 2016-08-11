@@ -2,13 +2,23 @@ import React, {Component} from 'react';
 import Conditional from 'react-conditional-component';
 
 export default class Retreats extends Component {
+    constructor(props) {
+        super(props);
+
+        this.showCreateRetreatModalForSangha = this.showCreateRetreatModalForSangha.bind(this);
+    }
+
+
+    showCreateRetreatModalForSangha() {
+        this.props.showCreateRetreatModal(this.props.sangha.id);
+    }
+
   render() {
 
       const {
           isAdminOfThisSangha,
           isMemberOfThisSangha,
-          retreats,
-          routes
+          retreats
           } = this.props;
 
       let retreatComponents = [];
@@ -43,7 +53,7 @@ export default class Retreats extends Component {
                           </div>
                           <Conditional value={ isAdminOfThisSangha }>
                               <div showIfTrue className="form-group">
-                                  <a href={ routes.createRetreat } className="btn btn-primary">Nieuw evenement</a>
+                                  <button className="btn btn-primary" onClick={ this.showCreateRetreatModalForSangha }>Nieuw evenement</button>
                               </div>
                           </Conditional>
                       </div>

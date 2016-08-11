@@ -3,7 +3,9 @@ import { bindActionCreators } from 'redux';
 import { render } from 'react-dom';
 import { connect } from 'react-redux';
 import Sangha from './../components/Sangha';
+import CreateRetreat from './../components/modals/CreateRetreat'
 import * as sanghaActions from '../actions/sangha';
+import * as modalTypes from '../constants/ModalTypes';
 
 class App extends Component {
     constructor(props) {
@@ -34,13 +36,27 @@ class App extends Component {
     toggleRole(userId, sanghaId) {
         this.actions.toggleRole(
             userId,
-            sanghaId);
+            sanghaId
+        );
     }
 
     removeMember(userId, sanghaId) {
         this.actions.removeMember(
             userId,
-            sanghaId);
+            sanghaId
+        );
+    }
+
+    showCreateRetreatModal(sanghaId) {
+        this.actions.showCreateRetreatModal(modalTypes.CREATE_RETREAT, sanghaId);
+    }
+
+    createRetreatForSangha(sanghaId) {
+        this.actions.createRetreatForSangha(sanghaId);
+    }
+
+    hideCreateRetreatModal() {
+        this.actions.hideModal(modalTypes.CREATE_RETREAT);
     }
 
     render() {
@@ -49,8 +65,13 @@ class App extends Component {
           <Sangha approveMembershipRequest={ this.approveMembershipRequest.bind(this) }
                   rejectMembershipRequest={ this.rejectMembershipRequest.bind(this) }
                   toggleRole={ this.toggleRole.bind(this) }
-                  removeMember = { this.removeMember.bind(this) }
+                  removeMember={ this.removeMember.bind(this) }
+                  showCreateRetreatModal={ this.showCreateRetreatModal.bind(this) }
                   {...this.props}/>
+          <CreateRetreat show={ this.props.modals.CreateRetreat.show }
+                         bsSize={ this.props.modals.CreateRetreat.bsSize }
+                         createRetreatForSangha = { this.createRetreatForSangha.bind(this) }
+                         onHide={ this.hideCreateRetreatModal.bind(this) }/>
         </div>
       )
     }
@@ -64,8 +85,9 @@ const mapStateToProps = (state) => {
         notifications: state.notifications.notifications,
         admins: state.admins,
         members: state.members.members,
-        retreats: state.retreats,
-        routes: state.routes
+        retreats: state.retreats.retreats,
+        routes: state.routes,
+        modals: state.modals
     }
 };
 
