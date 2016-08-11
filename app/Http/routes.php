@@ -94,6 +94,11 @@ Route::get('sanghas/{id}/members',[
         'uses' => 'SanghasController@getMembersForSangha'
 ]);
 
+Route::get('sanghas/{id}/retreats',[
+    'middleware' => 'memberOfSangha',
+    'as' => 'get_sangha_retreats_path',
+    'uses' => 'SanghasController@getRetreatsForSangha'
+]);
 
 /**
  * Roles

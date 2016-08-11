@@ -5,6 +5,7 @@ use App\Http\Requests\CreateSanghaRequest;
 use App\Http\Requests\EditSanghaRequest;
 use App\Commands\CreateSanghaCommand;
 use App\Commands\EditSanghaCommand;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Sanghaplanner\Sanghas\SanghaRepositoryInterface;
 use Sanghaplanner\Roles\RoleRepositoryInterface;
@@ -185,13 +186,25 @@ class SanghasController extends Controller
 
     /**
      * @param int $id
-     * @return string
+     * @return JsonResponse
      */
     public function getMembersForSangha($id)
     {
         $sangha = $this->sanghaRepository->findById($id);
         if ($sangha) {
-            return json_encode($this->getMembers($sangha));
+            return new JsonResponse($this->getMembers($sangha), 200);
+        }
+    }
+
+    /**
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function getRetreatsForSangha($id)
+    {
+        $sangha = $this->sanghaRepository->findById($id);
+        if ($sangha) {
+            return new JsonResponse($this->getRetreats($sangha->id), 200);
         }
     }
 
