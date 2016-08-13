@@ -4,7 +4,7 @@
   become: yes
 
   tasks:
-  - name: add php7.0 repository
+  - name: add php repository
     apt_repository: repo='ppa:ondrej/php'
 
   - name: update packages
@@ -16,13 +16,13 @@
       - vim
       - mysql-server
       - python-mysqldb
-      - php7.0
-      - php7.0-fpm
-      - php7.0-mbstring
-      - php7.0-mcrypt
-      - php7.0-mysql
-      - php-xdebug
-      - php-xml
+      - php5.6
+      - php5.6-fpm
+      - php5.6-mbstring
+      - php5.6-dom
+      - php5.6-mcrypt
+      - php5.6-mysql
+      - nginx
       - nodejs-legacy
       - npm
 
@@ -31,6 +31,12 @@
 
   - name: delete default nginx configuration
     file: path=/etc/nginx/sites-available/default state=absent
+
+  - name: copy nginx sanghaplanner configuration
+    template: src=templates/nginx.cfg.j2 dest=/etc/nginx/sites-available/sanghaplanner
+
+  - name: enable nginx sanghaplanner configuration
+    file: src=/etc/nginx/sites-available/sanghaplanner dest=/etc/nginx/sites-enabled/sanghaplanner state=link
 
   - name: create database
     mysql_db: name=sanghaplanner state=present
@@ -48,4 +54,19 @@
     shell: curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 
   - name: composer install
-    shell: composer install
+    shell: cd /vagrant && composer install
+
+  - name: npm prune
+    shell: cd /vagrant && npm prune
+
+  - name: disable npm progress bar
+    shell: npm set progress=false
+
+  - name: npm install
+    shell: cd /vagrant && npm install
+
+#  - name: download composer
+#    get_url:
+#      url: https://getcomposer.org/installer
+#      dest: /usr/local/bin/composer
+#      mode: 0755

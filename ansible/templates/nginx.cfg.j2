@@ -1,0 +1,20 @@
+server {
+    server_name sanghaplanner.dev;
+
+    listen      80;
+    root        /vagrant/public;
+
+    access_log  /var/log/nginx/access.log;
+    error_log   /var/log/nginx/error.log;
+
+    location / {
+        try_files $uri /index.php;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass         unix:/var/run/php/php5.6-fpm.sock;
+        fastcgi_read_timeout 240;
+        fastcgi_index        index.php;
+        include              fastcgi_params;
+    }
+}
